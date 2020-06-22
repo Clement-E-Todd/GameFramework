@@ -2,17 +2,17 @@
 
 namespace ClementTodd.Characters
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(Rigidbody))]
     public class Character : MonoBehaviour
     {
-        public CharacterController controller { get; private set; }
+        public Rigidbody body { get; private set; }
 
         public BehaviourState defaultState;
         public BehaviourState currentState { get; private set; }
 
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
+            body = GetComponent<Rigidbody>();
 
             if (defaultState == null)
             {

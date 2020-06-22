@@ -14,7 +14,7 @@ namespace ClementTodd.Characters
             if (behaviourData.move.sqrMagnitude >= minMove)
             {
                 Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
-                character.controller.Move(moveDirection * speed * Time.fixedDeltaTime);
+                character.body.MovePosition(character.transform.position + moveDirection * speed * Time.fixedDeltaTime);
 
                 Quaternion targetRotation = Quaternion.LookRotation(moveDirection.normalized);
                 character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
