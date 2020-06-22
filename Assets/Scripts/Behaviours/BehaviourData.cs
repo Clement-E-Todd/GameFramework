@@ -6,7 +6,7 @@ namespace ClementTodd.Characters
 {
     public class BehaviourData
     {
-        public Vector2 moveDirection;
+        public Vector2 move;
         public bool run;
         public bool jump;
     }

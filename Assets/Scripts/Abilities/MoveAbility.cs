@@ -6,16 +6,19 @@ namespace ClementTodd.Characters
     {
         public float speed = 2f;
 
-        private Vector2 moveVector;
+        public float turnSpeed = 360f;
 
-        private void Update()
-        {
-            moveVector = behaviourData.moveDirection * speed;
-        }
-
+        private const float minMove = 0.001f;
         private void FixedUpdate()
         {
-            character.controller.Move(new Vector3(moveVector.x, 0f, moveVector.y) * Time.fixedDeltaTime);
+            if (behaviourData.move.sqrMagnitude >= minMove)
+            {
+                Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
+                character.controller.Move(moveDirection * speed * Time.fixedDeltaTime);
+
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection.normalized);
+                character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
+            }
         }
     }
 }
