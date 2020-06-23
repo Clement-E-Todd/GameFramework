@@ -30,6 +30,7 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     public void OnLook(InputAction.CallbackContext context)

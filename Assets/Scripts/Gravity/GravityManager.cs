@@ -53,7 +53,6 @@ public class GravityManager : MonoBehaviour
             totalGravity += sources[i].GetGravityAtPosition(worldPosition);
         }
 
-        Debug.Log(totalGravity);
         return totalGravity;
     }
 }
