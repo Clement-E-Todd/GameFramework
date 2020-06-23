@@ -25,5 +25,10 @@ namespace ClementTodd.Characters
             Vector3 moveDirection3D = (forward * input.y) + (right * input.x);
             data.move = new Vector2(moveDirection3D.x, moveDirection3D.z);
         }
+
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            data.jump = context.ReadValueAsButton();
+        }
     }
 }

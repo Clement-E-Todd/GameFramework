@@ -76726,6 +76726,7 @@ GameObject:
   - component: {fileID: 384678332}
   - component: {fileID: 384678330}
   - component: {fileID: 384678329}
+  - component: {fileID: 384678333}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -76816,8 +76817,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79234682a793dee4cb8a522a6962c595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gravityScale: 1
+  gravityScale: 2
   stayUpright: 1
+--- !u!114 &384678333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384678326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6561300d4715e4f978ae9a565af9e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 0
+  maxHoldTime: 0.5
 --- !u!1 &458823549
 GameObject:
   m_ObjectHideFlags: 3
@@ -77757,7 +77772,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.104109846, y: 0.000000032721, z: -0.0000000034251912, w: 0.99456584}
+  m_LocalRotation: {x: 0.104109846, y: -0.0000000326944, z: 0.0000000034224064, w: 0.99456584}
   m_LocalPosition: {x: 0, y: 3, z: -6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -77931,7 +77946,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158817443}
-  m_LocalRotation: {x: -0.01784574, y: 0.000000033966955, z: -0.000000013280645, w: 0.99984074}
+  m_LocalRotation: {x: -0.017845733, y: -0.000000019207581, z: -0.0000000030125946,
+    w: 0.99984074}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -78055,7 +78071,18 @@ MonoBehaviour:
     m_ActionId: a0b4f08f-6989-4409-9c73-b8cfaec2dc3c
     m_ActionName: Player/Look[/XInputControllerWindows/rightStick,/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 384678330}
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 987045ac-f00f-4404-a772-206316456dba
     m_ActionName: Player/Jump[/XInputControllerWindows/buttonSouth,/Keyboard/space]
   - m_PersistentCalls:
@@ -78608,7 +78635,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727626711}
-  m_LocalRotation: {x: -0, y: 0.000000045820663, z: -0.00000005523149, w: 1}
+  m_LocalRotation: {x: -0, y: -0.00000004683294, z: -0.000000035620243, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -79835,7 +79862,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130506401}
-  m_LocalRotation: {x: 0.018189467, y: 0.00000003254152, z: -0.000000034011073, w: 0.99983466}
+  m_LocalRotation: {x: 0.018189467, y: -0.000000032643037, z: -0.00000001896924, w: 0.99983466}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

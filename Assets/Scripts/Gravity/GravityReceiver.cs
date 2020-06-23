@@ -14,7 +14,7 @@ public class GravityReceiver : MonoBehaviour
 
     public bool isGrounded { get; private set; }
 
-    private Vector3 gravityDirection = -Vector3.up;
+    public Vector3 gravityDirection { get; private set; }
 
     const float uprightTurnSpeed = 360f;
 
