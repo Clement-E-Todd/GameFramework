@@ -16,7 +16,7 @@ namespace ClementTodd.Characters
                 Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
                 character.body.MovePosition(character.transform.position + moveDirection * speed * Time.fixedDeltaTime);
 
-                Quaternion targetRotation = Quaternion.LookRotation(moveDirection.normalized);
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection.normalized, transform.up);
                 character.transform.rotation = Quaternion.RotateTowards(character.transform.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime);
             }
         }
