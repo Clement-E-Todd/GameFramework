@@ -14,6 +14,10 @@ public class GravityReceiver : MonoBehaviour
 
     public bool isGrounded { get; private set; }
 
+    private Vector3 groundNormal = Vector3.up;
+
+    private Vector3 totalGroundNormal = Vector3.zero;
+
     public Vector3 gravityDirection { get; private set; }
 
     const float uprightTurnSpeed = 360f;
@@ -45,7 +49,10 @@ public class GravityReceiver : MonoBehaviour
 
         // Check if gravity receiver is grounded
         isGrounded = groundColliders.Count > 0;
+        groundNormal = isGrounded ? (totalGroundNormal / groundColliders.Count).normalized : -gravityDirection;
+
         groundColliders.Clear();
+        totalGroundNormal = Vector3.zero;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -70,11 +77,25 @@ public class GravityReceiver : MonoBehaviour
 
                 if (dot >= minGroundDotProduct)
                 {
-                    groundColliders.Add(collision.collider);
                     isGrounded = true;
+
+                    groundColliders.Add(collision.collider);
+                    totalGroundNormal += contact.normal;
+
                     return;
                 }
             }
         }
+    }
+
+    public Vector3 AlignVectorToGround(Vector3 vector)
+    {
+        if (isGrounded)
+        {
+            float groundDot = Vector3.Dot(vector, groundNormal);
+            vector -= groundNormal * groundDot;
+        }
+
+        return vector;
     }
 }
