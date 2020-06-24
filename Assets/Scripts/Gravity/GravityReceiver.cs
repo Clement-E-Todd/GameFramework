@@ -10,6 +10,8 @@ public class GravityReceiver : MonoBehaviour
 
     public bool stayUpright = true;
 
+    public bool useGroundFriction = true;
+
     private List<Collider> groundColliders = new List<Collider>();
 
     public bool isGrounded { get; private set; }
@@ -27,22 +29,46 @@ public class GravityReceiver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Check if gravity receiver is grounded
-        isGrounded = groundColliders.Count > 0;
-        groundColliders.Clear();
-
         // Apply gravity to receiver
-        Vector3 gravity = GravityManager.instance.GetGravityAtPosition(body.centerOfMass);
-        gravityDirection = gravity.normalized;
-
-        body.AddForce(gravity * gravityScale);
-
-        // Rotate to stay upright
-        if (stayUpright && !Mathf.Approximately(gravity.sqrMagnitude, 0f))
+        if (body.useGravity && !Mathf.Approximately(gravityScale, 0f))
         {
-            Quaternion targetRotation = Quaternion.LookRotation(transform.forward, -gravityDirection);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, uprightTurnSpeed * Time.fixedDeltaTime);
+            Vector3 gravity = GravityManager.instance.GetGravityAtPosition(body.centerOfMass);
+            gravityDirection = gravity.normalized;
+
+            body.AddForce(gravity * gravityScale);
+
+            // Rotate to stay upright
+            if (stayUpright && !Mathf.Approximately(gravity.sqrMagnitude, 0f))
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(transform.forward, -gravityDirection);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, uprightTurnSpeed * Time.fixedDeltaTime);
+            }
         }
+
+        // Check if gravity receiver is grounded and apply friction if needed
+        isGrounded = groundColliders.Count > 0;
+        if (useGroundFriction && isGrounded)
+        {
+            // Get average friction of ground colliders
+            float friction = 0f;
+            for (int i = 0; i < groundColliders.Count; i++)
+            {
+                friction += groundColliders[i].material.staticFriction;
+            }
+            friction /= groundColliders.Count;
+
+            if (friction > 0f)
+            {
+                // Get the velocity at which the receiver is moving along the ground
+                float downwardSpeed = Vector3.Dot(body.velocity, gravityDirection);
+                Vector3 verticalVelocity = gravityDirection * downwardSpeed;
+                Vector3 horizontalVelocity = body.velocity - verticalVelocity;
+
+                // Apply friction
+                body.velocity -= horizontalVelocity * friction;
+            }
+        }
+        groundColliders.Clear();
     }
 
     private void OnCollisionEnter(Collision collision)
