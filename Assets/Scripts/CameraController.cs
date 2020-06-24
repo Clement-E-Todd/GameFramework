@@ -1,15 +1,11 @@
 ﻿using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.PlayerLoop;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(CinemachineBrain))]
 public class CameraController : MonoBehaviour
 {
-    public float lookSpeed = 1f;
-
-    [Range(0f, 1f)] public float mouseSensitivity = 0.1f;
-
     private CinemachineBrain _brain;
     private CinemachineBrain brain
     {
@@ -23,9 +19,14 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private Vector2 look = Vector2.zero;
+    public float lookSpeed = 1f;
 
+    [Range(0f, 1f)] public float mouseSensitivity = 0.1f;
+    private const float verticalMouseSensitivity = 0.1f;
+
+    private Vector2 look = Vector2.zero;
     private bool isMouseLook = false;
+    public static UnityEvent lookUpdatedEvent = new UnityEvent();
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class CameraController : MonoBehaviour
     {
         look = context.action.ReadValue<Vector2>();
         isMouseLook = context.control.device.name == "Mouse";
+        lookUpdatedEvent?.Invoke();
     }
 
     private void Update()
@@ -55,6 +57,7 @@ public class CameraController : MonoBehaviour
             if (isMouseLook)
             {
                 freeLook *= mouseSensitivity;
+                freeLook.y *= verticalMouseSensitivity;
             }
 
             freeLookCamera.m_XAxis.Value += freeLook.x * 180f * lookSpeed * Time.deltaTime;
