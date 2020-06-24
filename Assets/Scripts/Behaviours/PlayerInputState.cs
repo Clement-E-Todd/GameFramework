@@ -43,6 +43,11 @@ namespace ClementTodd.Characters
             data.move = new Vector2(moveDirection3D.x, moveDirection3D.z);
         }
 
+        public void OnRun(InputAction.CallbackContext context)
+        {
+            data.run = context.ReadValueAsButton();
+        }
+
         public void OnJump(InputAction.CallbackContext context)
         {
             data.jump = context.ReadValueAsButton();

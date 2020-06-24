@@ -5,6 +5,7 @@ namespace ClementTodd.Characters
     public class MoveAbility : Ability
     {
         public float speed = 2f;
+        public float runSpeed = 4f;
 
         public float turnSpeed = 360f;
 
@@ -13,6 +14,8 @@ namespace ClementTodd.Characters
         {
             if (behaviourData.move.sqrMagnitude >= minMove)
             {
+                float speed = behaviourData.run ? runSpeed : this.speed;
+
                 Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
                 character.body.MovePosition(character.transform.position + moveDirection * speed * Time.fixedDeltaTime);
 
