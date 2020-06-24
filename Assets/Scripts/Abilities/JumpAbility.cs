@@ -6,9 +6,9 @@ namespace ClementTodd.Characters
     [RequireComponent(typeof(GravityReceiver))]
     public class JumpAbility : Ability
     {
-        private float jumpForce = 300f;
+        public float jumpForce = 500f;
 
-        private float maxHoldTime = 0.25f;
+        public float maxHoldTime = 0.125f;
 
         private Rigidbody body;
 
