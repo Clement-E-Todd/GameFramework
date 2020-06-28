@@ -31,7 +31,6 @@ namespace ClementTodd.Characters
                 float speed = behaviourData.run ? runSpeed : this.speed;
                 float maxAcceleration = speed / Time.fixedDeltaTime;
                 float friction = (gravityReceiver != null) ? gravityReceiver.groundFriction : 1f;
-                Debug.Log("Friction: " + friction);
                 moveVelocity = Vector3.MoveTowards(moveVelocity, moveDirection * speed, maxAcceleration * friction * Time.fixedDeltaTime);
 
                 if (!Mathf.Approximately(moveDirection.sqrMagnitude, 0f))
