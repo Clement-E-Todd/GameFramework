@@ -31,7 +31,6 @@ namespace ClementTodd.Characters
 
             if (jumpTapped && gravityReceiver.isGrounded)
             {
-                Debug.Log("Jump @ " + Time.time);
                 gravityReceiver.LaunchUpwards(jumpForce);
                 jumpStartTime = Time.time;
             }

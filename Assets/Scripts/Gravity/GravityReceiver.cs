@@ -18,6 +18,10 @@ public class GravityReceiver : MonoBehaviour
 
     private Vector3 totalGroundNormal = Vector3.zero;
 
+    public float groundFriction { get; private set; }
+
+    private float totalGroundFriction = 0f;
+
     public Vector3 gravity { get; private set; }
     public Vector3 gravityDirection { get; private set; }
     public float gravityMagnitude { get; private set; }
@@ -54,9 +58,11 @@ public class GravityReceiver : MonoBehaviour
         // Check if gravity receiver is grounded
         UpdateIsGrounded();
         groundNormal = isGrounded ? (totalGroundNormal / groundColliders.Count).normalized : -gravityDirection;
+        groundFriction = isGrounded ? (totalGroundFriction / groundColliders.Count) : groundFriction;
 
         groundColliders.Clear();
         totalGroundNormal = Vector3.zero;
+        totalGroundFriction = 0f;
 
         // Apply gravity to receiver
         if (applyGravity)
@@ -85,14 +91,7 @@ public class GravityReceiver : MonoBehaviour
 
     private void UpdateIsGrounded()
     {
-        bool wasGrounded = isGrounded;
-
         isGrounded = groundColliders.Count > 0 && gravityMagnitude > 0f && Time.time >= lastLaunchTime + minAirtimeAfterLaunch;
-        
-        if (wasGrounded != isGrounded)
-        {
-            Debug.LogFormat("Grounded == {0} @ {1}", isGrounded, Time.time);
-        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -119,6 +118,7 @@ public class GravityReceiver : MonoBehaviour
                 {
                     groundColliders.Add(collision.collider);
                     totalGroundNormal += contact.normal;
+                    totalGroundFriction += collision.collider.material.staticFriction;
 
                     UpdateIsGrounded();
 
