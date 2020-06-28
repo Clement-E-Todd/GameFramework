@@ -14,15 +14,20 @@ public class GravityReceiver : MonoBehaviour
 
     public bool isGrounded { get; private set; }
 
-    private Vector3 groundNormal = Vector3.up;
+    public Vector3 groundNormal { get; private set; }
 
     private Vector3 totalGroundNormal = Vector3.zero;
 
+    public Vector3 gravity { get; private set; }
     public Vector3 gravityDirection { get; private set; }
+    public float gravityMagnitude { get; private set; }
 
     const float uprightTurnSpeed = 360f;
 
     const float minGroundDotProduct = 0.7f;
+
+    const float minAirtimeAfterLaunch = 0.1f;
+    private float lastLaunchTime = -1f;
 
     private void Awake()
     {
@@ -31,11 +36,37 @@ public class GravityReceiver : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Apply gravity to receiver
-        if (body.useGravity && !Mathf.Approximately(gravityScale, 0f))
+        bool applyGravity = body.useGravity && !Mathf.Approximately(gravityScale, 0f);
+
+        if (applyGravity)
         {
-            Vector3 gravity = GravityManager.instance.GetGravityAtPosition(body.centerOfMass);
+            gravity = GravityManager.instance.GetGravityAtPosition(body.centerOfMass);
             gravityDirection = gravity.normalized;
+            gravityMagnitude = gravity.magnitude;
+        }
+        else
+        {
+            gravity = Vector3.zero;
+            gravityDirection = Vector3.zero;
+            gravityMagnitude = 0f;
+        }
+
+        // Check if gravity receiver is grounded
+        UpdateIsGrounded();
+        groundNormal = isGrounded ? (totalGroundNormal / groundColliders.Count).normalized : -gravityDirection;
+
+        groundColliders.Clear();
+        totalGroundNormal = Vector3.zero;
+
+        // Apply gravity to receiver
+        if (applyGravity)
+        {
+            // If on the ground, cheat by applying gravity directly into the ground's slope to prevent
+            // unintended sliding while standing on inclines
+            if (isGrounded)
+            {
+                gravity = -groundNormal * gravityMagnitude;
+            }
 
             body.AddForce(gravity * gravityScale);
 
@@ -43,16 +74,25 @@ public class GravityReceiver : MonoBehaviour
             if (stayUpright && !Mathf.Approximately(gravity.sqrMagnitude, 0f))
             {
                 Quaternion targetRotation = Quaternion.LookRotation(transform.forward, -gravityDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, uprightTurnSpeed * Time.fixedDeltaTime);
+
+                transform.rotation = Quaternion.RotateTowards(
+                    transform.rotation,
+                    targetRotation,
+                    uprightTurnSpeed * Time.fixedDeltaTime);
             }
         }
+    }
 
-        // Check if gravity receiver is grounded
-        isGrounded = groundColliders.Count > 0;
-        groundNormal = isGrounded ? (totalGroundNormal / groundColliders.Count).normalized : -gravityDirection;
+    private void UpdateIsGrounded()
+    {
+        bool wasGrounded = isGrounded;
 
-        groundColliders.Clear();
-        totalGroundNormal = Vector3.zero;
+        isGrounded = groundColliders.Count > 0 && gravityMagnitude > 0f && Time.time >= lastLaunchTime + minAirtimeAfterLaunch;
+        
+        if (wasGrounded != isGrounded)
+        {
+            Debug.LogFormat("Grounded == {0} @ {1}", isGrounded, Time.time);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,15 +117,22 @@ public class GravityReceiver : MonoBehaviour
 
                 if (dot >= minGroundDotProduct)
                 {
-                    isGrounded = true;
-
                     groundColliders.Add(collision.collider);
                     totalGroundNormal += contact.normal;
+
+                    UpdateIsGrounded();
 
                     return;
                 }
             }
         }
+    }
+
+    public void LaunchUpwards(float force)
+    {
+        body.AddForce(-gravityDirection * force);
+        isGrounded = false;
+        lastLaunchTime = Time.time;
     }
 
     public Vector3 AlignVectorToGround(Vector3 vector)

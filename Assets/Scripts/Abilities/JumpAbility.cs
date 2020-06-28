@@ -31,13 +31,13 @@ namespace ClementTodd.Characters
 
             if (jumpTapped && gravityReceiver.isGrounded)
             {
-                character.body.AddForce(-gravityReceiver.gravityDirection * jumpForce);
+                Debug.Log("Jump @ " + Time.time);
+                gravityReceiver.LaunchUpwards(jumpForce);
                 jumpStartTime = Time.time;
             }
             else if (jumpHeld && Time.time <= jumpStartTime + maxHoldTime)
             {
-                Vector3 gravity = GravityManager.instance.GetGravityAtPosition(body.centerOfMass);
-                body.AddForce(-gravity * gravityReceiver.gravityScale);
+                body.AddForce(-gravityReceiver.gravity * gravityReceiver.gravityScale);
             }
         }
     }
