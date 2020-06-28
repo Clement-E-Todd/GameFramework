@@ -28,7 +28,7 @@ public class GravityReceiver : MonoBehaviour
 
     const float uprightTurnSpeed = 360f;
 
-    const float minGroundDotProduct = 0.7f;
+    const float minGroundDotProduct = 0.35f;
 
     const float minAirtimeAfterLaunch = 0.1f;
     private float lastLaunchTime = -1f;

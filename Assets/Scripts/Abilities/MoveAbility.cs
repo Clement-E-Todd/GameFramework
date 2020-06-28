@@ -9,13 +9,15 @@ namespace ClementTodd.Characters
 
         public float turnSpeed = 360f;
 
+        public Transform groundAnchor;
+
         private Vector3 moveVelocity = Vector3.zero;
 
         private GravityReceiver gravityReceiver;
 
-        private float groundStickiness = 4f;
-
         private const float minMove = 0.001f;
+
+        private const float maxGroundDistance = 0.2f;
 
 
         private void Awake()
@@ -47,7 +49,15 @@ namespace ClementTodd.Characters
                     movement = gravityReceiver.AlignVectorToGround(movement);
 
                     // Push slightly into the ground to avoid awkward hops when the slope angle changes
-                    movement -= gravityReceiver.groundNormal * groundStickiness;
+                    if (groundAnchor)
+                    {
+                        RaycastHit hit;
+                        bool overGround = Physics.Raycast(groundAnchor.position, gravityReceiver.gravityDirection, out hit, maxGroundDistance);
+                        if (overGround)
+                        {
+                            movement -= gravityReceiver.groundNormal * hit.distance / Time.fixedDeltaTime;
+                        }
+                    }
                 }
 
                 character.body.MovePosition(character.transform.position + movement * Time.fixedDeltaTime);
