@@ -34,7 +34,7 @@ namespace ClementTodd.Characters
                 gravityReceiver.LaunchUpwards(jumpForce);
                 jumpStartTime = Time.time;
             }
-            else if (jumpHeld && Time.time <= jumpStartTime + maxHoldTime)
+            else if (jumpHeld && !gravityReceiver.isGrounded && Time.time <= jumpStartTime + maxHoldTime)
             {
                 body.AddForce(-gravityReceiver.gravity * gravityReceiver.gravityScale);
             }

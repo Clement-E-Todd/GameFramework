@@ -26,6 +26,11 @@ public class GravityReceiver : MonoBehaviour
     public Vector3 gravityDirection { get; private set; }
     public float gravityMagnitude { get; private set; }
 
+    [Range(0f, 1f)]
+    public float minSlopeGrip = 0.7f;
+    private const float minSlopeToSlide = 0.1f;
+    public float gripOnGround { get; private set; }
+
     const float uprightTurnSpeed = 360f;
 
     const float minGroundDotProduct = 0.35f;
@@ -64,17 +69,37 @@ public class GravityReceiver : MonoBehaviour
         totalGroundNormal = Vector3.zero;
         totalGroundFriction = 0f;
 
-        // Apply gravity to receiver
         if (applyGravity)
         {
-            // If on the ground, cheat by applying gravity directly into the ground's slope to prevent
-            // unintended sliding while standing on inclines
+            Vector3 gravityToApply = gravity;
+
             if (isGrounded)
             {
-                gravity = -groundNormal * gravityMagnitude;
+                // If the slope is too steep or slippery, slide down in a controlled manner.
+                float slopeFlatness = Vector3.Dot(groundNormal, -gravityDirection);
+                gripOnGround = groundFriction * slopeFlatness;
+                bool sliding = gripOnGround < minSlopeGrip && slopeFlatness <= (1f - minSlopeToSlide);
+
+                if (sliding)
+                {
+                    Vector3 horizontalDirection = AlignVectorToHorizontalPlane(groundNormal).normalized;
+                    Vector3 slideDirection = AlignVectorToGround(horizontalDirection).normalized;
+                    gravityToApply = slideDirection * gravityMagnitude * (1f - gripOnGround);
+                }
+                else
+                {
+                    // Cheat by applying gravity directly into the ground's
+                    // slope (instead of downwards) to prevent unintended sliding.
+                    gravityToApply = -groundNormal * gravityMagnitude;
+                }
+            }
+            else
+            {
+                gripOnGround = 0f;
             }
 
-            body.AddForce(gravity * gravityScale);
+            // Apply gravity to receiver
+            body.AddForce(gravityToApply * gravityScale);
 
             // Rotate to stay upright
             if (stayUpright && !Mathf.Approximately(gravity.sqrMagnitude, 0f))
@@ -143,6 +168,13 @@ public class GravityReceiver : MonoBehaviour
             vector -= groundNormal * groundDot;
         }
 
+        return vector;
+    }
+
+    public Vector3 AlignVectorToHorizontalPlane(Vector3 vector)
+    {
+        float planeDot = Vector3.Dot(vector, gravityDirection);
+        vector -= gravityDirection * planeDot;
         return vector;
     }
 }
