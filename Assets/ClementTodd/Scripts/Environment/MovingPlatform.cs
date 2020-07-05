@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ClementTodd
+namespace ClementTodd_v0_0_1
 {
     [RequireComponent(typeof(Rigidbody))]
     public class MovingPlatform : MonoBehaviour

@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace ClementTodd.Characters
+namespace ClementTodd_v0_0_1
 {
     public class BehaviourData
     {

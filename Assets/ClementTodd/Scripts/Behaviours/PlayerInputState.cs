@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace ClementTodd.Characters
+namespace ClementTodd_v0_0_1
 {
     public class PlayerInputState : BehaviourState
     {
