@@ -12,7 +12,7 @@ namespace ClementTodd.Characters
 
         public float airFriction = 0.05f;
 
-        public float maxSlopeSlidingSpeed = 20f;
+        public float maxUphillResistance = 20f;
 
         public Transform groundAnchor;
 
@@ -61,8 +61,7 @@ namespace ClementTodd.Characters
                     if (slideDot < 0f)
                     {
                         Vector3 targetSlideMomentum = momentum - (gravityReceiver.horizontalSlopeDirection * slideDot);
-                        momentum = Vector3.MoveTowards(momentum, targetSlideMomentum, maxSlopeSlidingSpeed * (1f - gravityReceiver.gripOnGround));// * (1f - gravityReceiver.gripOnGround) * Time.fixedDeltaTime);
-                        Debug.Log(targetSlideMomentum);
+                        momentum = Vector3.MoveTowards(momentum, targetSlideMomentum, maxUphillResistance * (1f - gravityReceiver.gripOnGround));
                     }
                 }
 
