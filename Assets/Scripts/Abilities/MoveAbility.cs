@@ -22,6 +22,8 @@ namespace ClementTodd.Characters
 
         private const float maxGroundDistance = 0.2f;
 
+        private const float ledgeSlipSpeed = 2f;
+
 
         private void Awake()
         {
@@ -30,7 +32,19 @@ namespace ClementTodd.Characters
 
         private void FixedUpdate()
         {
-            if (behaviourData.move.sqrMagnitude >= minMove || momentum.sqrMagnitude >= minMove)
+            // Check whether the character is hanging off of a ledge so they can slip off
+            bool isSlippingOffLedge = false;
+            RaycastHit groundAnchorHit = default;
+            if (groundAnchor)
+            {
+                isSlippingOffLedge = !Physics.Raycast(
+                    groundAnchor.position,
+                    gravityReceiver.gravityDirection,
+                    out groundAnchorHit,
+                    maxGroundDistance);
+            }
+
+            if (behaviourData.move.sqrMagnitude >= minMove || momentum.sqrMagnitude >= minMove || isSlippingOffLedge)
             {
                 // Calculate the variables needed to move based on the character's human-or-computer-controller behaviour
                 Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
@@ -68,15 +82,17 @@ namespace ClementTodd.Characters
                     // Align movement to ground for better control
                     movement = gravityReceiver.AlignVectorToGround(movement);
 
-                    // Push lightly into the ground to avoid awkward hops when the slope angle changes
-                    if (groundAnchor)
+                    // If hanging off of a ledge, slip off.
+                    if (isSlippingOffLedge)
                     {
-                        RaycastHit hit;
-                        bool overGround = Physics.Raycast(groundAnchor.position, gravityReceiver.gravityDirection, out hit, maxGroundDistance);
-                        if (overGround)
-                        {
-                            movement -= gravityReceiver.groundNormal * hit.distance / Time.fixedDeltaTime;
-                        }
+                        Vector3 ledgeSlipDirection = gravityReceiver.AlignVectorToHorizontalPlane(groundAnchor.position - gravityReceiver.groundContactPoint).normalized;
+                        movement += ledgeSlipDirection * ledgeSlipSpeed;
+                    }
+
+                    // Push lightly into the ground to avoid awkward hops when the slope angle changes
+                    else
+                    {
+                        movement -= gravityReceiver.groundNormal * groundAnchorHit.distance / Time.fixedDeltaTime;
                     }
                 }
 
