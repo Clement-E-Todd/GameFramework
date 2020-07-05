@@ -30,10 +30,17 @@ public class GravityReceiver : MonoBehaviour
     public Vector3 gravityDirection { get; private set; }
     public float gravityMagnitude { get; private set; }
 
+    public float groundSlope { get; private set; }
+
+    public Vector3 horizontalSlopeDirection { get; private set; }
+
     [Range(0f, 1f)]
     public float minSlopeGrip = 0.7f;
+    
     private const float minSlopeToSlide = 0.1f;
     public float gripOnGround { get; private set; }
+
+    public bool isSliding { get; private set; }
 
     const float uprightTurnSpeed = 360f;
 
@@ -71,10 +78,12 @@ public class GravityReceiver : MonoBehaviour
             groundNormal = (totalGroundNormal / groundColliders.Count).normalized;
             groundFriction = totalGroundFriction / groundColliders.Count;
             groundContactPoint = totalGroundContactPoint / groundColliders.Count;
+            groundSlope = 1f - Vector3.Dot(groundNormal, -gravityDirection);
         }
         else
         {
             groundNormal = -gravityDirection;
+            groundSlope = 1f;
         }
 
         groundColliders.Clear();
@@ -89,14 +98,13 @@ public class GravityReceiver : MonoBehaviour
             if (isGrounded)
             {
                 // If the slope is too steep or slippery, slide down in a controlled manner.
-                float slopeFlatness = Vector3.Dot(groundNormal, -gravityDirection);
-                gripOnGround = groundFriction * slopeFlatness;
-                bool sliding = gripOnGround < minSlopeGrip && slopeFlatness <= (1f - minSlopeToSlide);
+                gripOnGround = groundFriction * (1f - groundSlope);
+                isSliding = gripOnGround < minSlopeGrip && groundSlope >= minSlopeToSlide;
+                horizontalSlopeDirection = AlignVectorToHorizontalPlane(groundNormal).normalized;
 
-                if (sliding)
+                if (isSliding)
                 {
-                    Vector3 horizontalDirection = AlignVectorToHorizontalPlane(groundNormal).normalized;
-                    Vector3 slideDirection = AlignVectorToGround(horizontalDirection).normalized;
+                    Vector3 slideDirection = AlignVectorToGround(horizontalSlopeDirection).normalized;
                     gravityToApply = slideDirection * gravityMagnitude * (1f - gripOnGround);
                 }
                 else
@@ -109,6 +117,8 @@ public class GravityReceiver : MonoBehaviour
             else
             {
                 gripOnGround = 0f;
+                isSliding = false;
+                horizontalSlopeDirection = Vector3.zero;
             }
 
             // Apply gravity to receiver

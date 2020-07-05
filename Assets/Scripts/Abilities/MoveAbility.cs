@@ -5,12 +5,14 @@ namespace ClementTodd.Characters
     [RequireComponent(typeof(GravityReceiver))]
     public class MoveAbility : Ability
     {
-        public float speed = 2f;
-        public float runSpeed = 4f;
+        public float speed = 6f;
+        public float runSpeed = 10f;
 
         public float turnSpeed = 360f;
 
         public float airFriction = 0.05f;
+
+        public float maxSlopeSlidingSpeed = 20f;
 
         public Transform groundAnchor;
 
@@ -49,21 +51,34 @@ namespace ClementTodd.Characters
                 // Calculate the variables needed to move based on the character's human-or-computer-controller behaviour
                 Vector3 moveDirection = new Vector3(behaviourData.move.x, 0f, behaviourData.move.y);
                 float speed = behaviourData.run ? runSpeed : this.speed;
-                float maxAcceleration = speed / Time.fixedDeltaTime;
-                float friction = gravityReceiver.isGrounded ? gravityReceiver.groundFriction : Mathf.Min(gravityReceiver.groundFriction, airFriction);
-                momentum = Vector3.MoveTowards(momentum, moveDirection * speed, maxAcceleration * friction * Time.fixedDeltaTime);
+                float friction = gravityReceiver.isGrounded ? gravityReceiver.gripOnGround : Mathf.Min(gravityReceiver.groundFriction, airFriction);
+                momentum = Vector3.MoveTowards(momentum, moveDirection * speed, speed * friction);
 
-                // If the character's momentum counteracts their Rigidbody's velocity, reduce the velocity.
+                // If sliding down a slope, push momentum downwards
+                if (gravityReceiver.isSliding)
+                {
+                    float slideDot = Vector3.Dot(momentum, gravityReceiver.horizontalSlopeDirection);
+                    if (slideDot < 0f)
+                    {
+                        Vector3 targetSlideMomentum = momentum - (gravityReceiver.horizontalSlopeDirection * slideDot);
+                        momentum = Vector3.MoveTowards(momentum, targetSlideMomentum, maxSlopeSlidingSpeed * (1f - gravityReceiver.gripOnGround));// * (1f - gravityReceiver.gripOnGround) * Time.fixedDeltaTime);
+                        Debug.Log(targetSlideMomentum);
+                    }
+                }
+
+                // If the character's momentum opposes their Rigidbody's velocity, reduce the velocity.
                 // Only works on the ground.
                 if (gravityReceiver.isGrounded && !Mathf.Approximately(momentum.sqrMagnitude, 0f))
                 {
-                    Vector3 momentumDirection = momentum.normalized;
-                    float opposingVelocityMagnitude = -Vector3.Dot(character.body.velocity, momentumDirection);
+                    Vector3 velocityDirection = character.body.velocity.normalized;
+                    float opposingMomentum = -Vector3.Dot(momentum, velocityDirection);
 
-                    if (opposingVelocityMagnitude > 0f)
+                    if (opposingMomentum > 0f)
                     {
-                        float force = Mathf.Min(momentum.magnitude * gravityReceiver.gripOnGround, opposingVelocityMagnitude);
-                        character.body.AddForce(momentumDirection * force);
+                        Vector3 neutralizingForce = -velocityDirection * Mathf.Min(opposingMomentum, character.body.velocity.magnitude) * (1f - gravityReceiver.groundSlope);
+
+                        character.body.velocity += neutralizingForce;
+                        momentum -= neutralizingForce;
                     }
                 }
 
