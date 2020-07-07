@@ -43,6 +43,11 @@ namespace ClementTodd_v0_0_1
             data.move = new Vector2(moveDirection3D.x, moveDirection3D.z);
         }
 
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            data.interact = context.ReadValueAsButton();
+        }
+
         public void OnRun(InputAction.CallbackContext context)
         {
             data.run = context.ReadValueAsButton();
