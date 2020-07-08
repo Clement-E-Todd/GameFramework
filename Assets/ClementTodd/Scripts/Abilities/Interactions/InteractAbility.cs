@@ -14,6 +14,7 @@ namespace ClementTodd_v0_0_1
         private void FixedUpdate()
         {
             // Scan any interation zones in range to see which one can be used, if any.
+            InteractionZone previousTarget = targetInteraction;
             targetInteraction = null;
 
             if (interactablesInRange.Count == 1)
@@ -51,6 +52,19 @@ namespace ClementTodd_v0_0_1
                         bestScore = score;
                         targetInteraction = interactable;
                     }
+                }
+            }
+
+            // Notify the target if it has just started being targeted
+            if (targetInteraction != previousTarget && tag == "Player")
+            {
+                if (targetInteraction)
+                {
+                    targetInteraction.OnTargetedByPlayer(this);
+                }
+                else if (HUD.instance)
+                {
+                    HUD.instance.HideInteractionPrompt();
                 }
             }
 
