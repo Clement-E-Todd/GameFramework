@@ -7,6 +7,8 @@ namespace ClementTodd_v0_0_1
     {
         public Transform sourceTransform;
 
+        public Transform uiTargetTransform;
+
         public bool callerMustFaceSource = true;
 
         public abstract string ActionName { get; }

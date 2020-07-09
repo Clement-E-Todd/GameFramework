@@ -5,11 +5,25 @@ namespace ClementTodd_v0_0_1
 {
     public class InteractAbility : Ability
     {
+        // Interactables
         private List<InteractionZone> interactablesInRange = new List<InteractionZone>();
+        private InteractionZone targetInteraction = null;
 
+        // Input
         private bool interactHeld = false;
 
-        private InteractionZone targetInteraction = null;
+
+        public GameObject arrowUIPrefab;
+        private GameObject arrowUI;
+
+        private void Awake()
+        {
+            if (arrowUIPrefab)
+            {
+                arrowUI = Instantiate(arrowUIPrefab);
+                arrowUI.SetActive(false);
+            }
+        }
 
         private void FixedUpdate()
         {
@@ -65,6 +79,28 @@ namespace ClementTodd_v0_0_1
                 else if (HUD.instance)
                 {
                     HUD.instance.HideInteractionPrompt();
+                }
+            }
+
+            // If this charater has an interaction UI arrow, update it to point out the target
+            if (!arrowUI && arrowUIPrefab)
+            {
+                arrowUI = Instantiate(arrowUIPrefab);
+            }
+
+            if (arrowUI)
+            {
+                if (targetInteraction && targetInteraction.uiTargetTransform)
+                {
+                    arrowUI.SetActive(true);
+                    arrowUI.transform.SetParent(targetInteraction.uiTargetTransform);
+                    arrowUI.transform.localPosition = Vector3.zero;
+                    arrowUI.transform.localScale = Vector3.one;
+                }
+                else
+                {
+                    arrowUI.SetActive(false);
+                    arrowUI.transform.SetParent(null);
                 }
             }
 
