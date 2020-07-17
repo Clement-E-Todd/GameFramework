@@ -11,10 +11,9 @@ namespace ClementTodd_v0_0_1
 
         public bool callerMustFaceSource = true;
 
-        public abstract string ActionName { get; }
-        public abstract string Preposition { get; }
-
-        public string overrideSourceName;
+        public TextAsset textData;
+        public string actionNameTextKey;
+        public string prepositionTextKey;
 
         public abstract void DoInteraction(InteractAbility caller);
 
@@ -23,11 +22,12 @@ namespace ClementTodd_v0_0_1
             return !callerMustFaceSource || (sourceTransform && Vector3.Dot(callerTransform.forward, sourceTransform.position - callerTransform.transform.position) > 0f);
         }
 
-        public void OnTargetedByPlayer(InteractAbility callerInteractAbility)
+        public void OnTargetedByPlayer()
         {
-            HUD.instance.ShowInteractionPrompt(ActionName, Preposition + " " + (overrideSourceName.Length > 0 ? overrideSourceName : sourceTransform.name));
+            string actionName = LocalizationManager.Instance.GetString(textData, actionNameTextKey);
+            string preposition = LocalizationManager.Instance.GetString(textData, prepositionTextKey);
+
+            HUD.instance.ShowInteractionPrompt(actionName, preposition + " " + sourceTransform.name);
         }
-
-
     }
 }

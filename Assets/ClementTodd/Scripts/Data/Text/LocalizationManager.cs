@@ -2,73 +2,76 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour
+namespace ClementTodd_v0_0_1
 {
-    public static LocalizationManager Instance { get; private set; }
-
-    public enum Language
+    public class LocalizationManager : MonoBehaviour
     {
-        English,
-        Test
-    }
-    public Language language = Language.English;
+        public static LocalizationManager Instance { get; private set; }
 
-    private string LanguageKey
-    {
-        get
+        public enum Language
         {
-            switch (language)
+            English,
+            Test
+        }
+        public Language language = Language.English;
+
+        private string LanguageKey
+        {
+            get
             {
-                case Language.English:
-                    return "EN";
+                switch (language)
+                {
+                    case Language.English:
+                        return "EN";
 
-                case Language.Test:
-                    return "TEST";
+                    case Language.Test:
+                        return "TEST";
 
-                default:
-                    return null;
+                    default:
+                        return null;
+                }
             }
         }
-    }
 
-    public Dictionary<TextAsset, JSONObject> parsedData = new Dictionary<TextAsset, JSONObject>();
+        public Dictionary<TextAsset, JSONObject> parsedData = new Dictionary<TextAsset, JSONObject>();
 
-    public void Awake()
-    {
-        Instance = this;
-    }
-
-    public string GetString(TextAsset rawData, string key)
-    {
-        JSONObject data = ParseData(rawData);
-
-        if (data.HasKey(key))
+        public void Awake()
         {
-            JSONObject entry = data[key].AsObject;
+            Instance = this;
+        }
 
-            if (entry.HasKey(LanguageKey))
+        public string GetString(TextAsset rawData, string key)
+        {
+            JSONObject data = ParseData(rawData);
+
+            if (data.HasKey(key))
             {
-                return entry[LanguageKey].Value;
+                JSONObject entry = data[key].AsObject;
+
+                if (entry.HasKey(LanguageKey))
+                {
+                    return entry[LanguageKey].Value;
+                }
+                else
+                {
+                    Debug.LogErrorFormat("Language '{0}' not set for key '{1}' in text database.", LanguageKey, key);
+                    return "TRANSLATION NOT FOUND";
+                }
             }
             else
             {
-                Debug.LogErrorFormat("Language '{0}' not set for key '{1}' in text database.", LanguageKey, key);
-                return "TRANSLATION NOT FOUND";
+                Debug.LogErrorFormat("Key '{0}' not found in text database.", key);
+                return "KEY NOT FOUND";
             }
         }
-        else
-        {
-            Debug.LogErrorFormat("Key '{0}' not found in text database.", key);
-            return "KEY NOT FOUND";
-        }
-    }
 
-    private JSONObject ParseData(TextAsset rawData)
-    {
-        if (!parsedData.ContainsKey(rawData))
+        private JSONObject ParseData(TextAsset rawData)
         {
-            parsedData.Add(rawData, JSON.Parse(rawData.text).AsObject);
+            if (!parsedData.ContainsKey(rawData))
+            {
+                parsedData.Add(rawData, JSON.Parse(rawData.text).AsObject);
+            }
+            return parsedData[rawData];
         }
-        return parsedData[rawData];
     }
 }

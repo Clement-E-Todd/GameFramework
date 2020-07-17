@@ -74,7 +74,7 @@ namespace ClementTodd_v0_0_1
             {
                 if (targetInteraction)
                 {
-                    targetInteraction.OnTargetedByPlayer(this);
+                    targetInteraction.OnTargetedByPlayer();
                 }
                 else if (HUD.instance)
                 {

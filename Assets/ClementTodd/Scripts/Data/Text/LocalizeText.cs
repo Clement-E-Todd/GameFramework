@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Text))]
-public class LocalizeText : MonoBehaviour
+namespace ClementTodd_v0_0_1
 {
-    public TextAsset data;
-    public string key;
-
-    void Start()
+    [RequireComponent(typeof(Text))]
+    public class LocalizeText : MonoBehaviour
     {
-        GetComponent<Text>().text = LocalizationManager.Instance.GetString(data, key);
+        public TextAsset data;
+        public string key;
+
+        void Start()
+        {
+            GetComponent<Text>().text = LocalizationManager.Instance.GetString(data, key);
+        }
     }
 }
