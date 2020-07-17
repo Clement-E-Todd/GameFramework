@@ -1,0 +1,29 @@
+{
+    "NPC1_Line1": {
+        "EN": "Oh, hi! I'm a non-player character! My name is NPC1!"
+    },
+    "NPC1_Line2": {
+        "EN": "What can I do for you, friend?"
+    },
+    "NPC1_Line3": {
+        "EN": "Anything else you need?"
+    },
+    "NPC1_Choice1_Option1": {
+        "EN": "Where am I?"
+    },
+    "NPC1_Choice1_Option2": {
+        "EN": "What am I supposed to do?"
+    },
+    "NPC1_Choice1_Option3": {
+        "EN": "I'm all good!"
+    },
+    "NPC1_Choice1_Option1_Response": {
+        "EN": "This is just a test environment for the game framework you're playing!"
+    },
+    "NPC1_Choice1_Option2_Response": {
+        "EN": "I don't think there's any particular objective here. Just try out your abiliies!"
+    },
+    "NPC1_Choice1_Option3_Response": {
+        "EN": "Thanks for stopping  by!"
+    }
+}

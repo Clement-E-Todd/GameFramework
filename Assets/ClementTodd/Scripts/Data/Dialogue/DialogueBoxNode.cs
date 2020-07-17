@@ -6,8 +6,7 @@ namespace ClementTodd_v0_0_1
 {
 	public class DialogueBoxNode : DialogueNode
 	{
-		[TextArea(5, 15)]
-		public string text;
+		public string key;
 
 		public void Test()
 		{

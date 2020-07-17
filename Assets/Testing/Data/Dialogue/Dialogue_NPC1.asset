@@ -52,10 +52,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  options:
-  - Where am I?
-  - What am I supposed to do here?
-  - I'm good!
+  optionKeys:
+  - NPC1_Choice1_Option1
+  - NPC1_Choice1_Option2
+  - NPC1_Choice1_Option3
 --- !u!114 &-6299567051686498482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: This is just a test environment for the game framework you're playing!
+  key: NPC1_Choice1_Option1_Response
 --- !u!114 &-3724355133100036478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: Thanks for stopping  by!
+  key: NPC1_Choice1_Option3_Response
 --- !u!114 &-1721928860043011880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,7 +184,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: I don't think there's any particular objective here. Just try out your abiliies!
+  key: NPC1_Choice1_Option2_Response
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +205,7 @@ MonoBehaviour:
   - {fileID: -1721928860043011880}
   - {fileID: 8703459760432328550}
   - {fileID: -3724355133100036478}
+  textData: {fileID: 0}
 --- !u!114 &547712038432978409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,7 +246,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: Oh, hi! I'm a non-player character! My name is NPC1!
+  key: NPC1_Line1
 --- !u!114 &2081513072324654905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +290,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: What can I do for you, friend?
+  key: NPC1_Line2
 --- !u!114 &8703459760432328550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -336,4 +337,4 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  text: Anything else you need?
+  key: NPC1_Line3
