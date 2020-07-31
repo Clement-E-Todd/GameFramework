@@ -205,7 +205,7 @@ MonoBehaviour:
   - {fileID: -1721928860043011880}
   - {fileID: 8703459760432328550}
   - {fileID: -3724355133100036478}
-  textData: {fileID: 0}
+  textData: {fileID: 4900000, guid: 256beb8fac244a54fb2bea32cce8cca3, type: 3}
 --- !u!114 &547712038432978409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_Name: Dialogue Box
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -136, y: -200}
+  position: {x: -72, y: -200}
   ports:
     keys:
     - previous
