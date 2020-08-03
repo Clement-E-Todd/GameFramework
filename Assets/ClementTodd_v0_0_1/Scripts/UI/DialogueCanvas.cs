@@ -10,10 +10,16 @@ namespace ClementTodd_v0_0_1
         public TextMeshProUGUI dialogueBoxLabel;
         public TextMeshProUGUI nameLabel;
         public TextMeshProUGUI[] optionLabels;
+        public RectTransform optionHighlight;
+        public Animator optionHighlightAnimator;
 
         private bool dialogueBoxVisible = false;
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
+
+        private int selectedOptionIndex = 0;
+        public float highlightMoveTime = 0.1f;
+        private Vector2 highlightMoveVelocity;
 
         private void OnEnable()
         {
@@ -28,57 +34,89 @@ namespace ClementTodd_v0_0_1
             }
         }
 
+        private void Update()
+        {
+            // Dynamically animate the option highlight towards the selected option
+            if (optionsBoxVisible)
+            {
+                Vector2 destination = GetOptionHighlightDestination(); ;
+                optionHighlight.anchoredPosition = Vector2.SmoothDamp(
+                    optionHighlight.anchoredPosition,
+                    destination,
+                    ref highlightMoveVelocity,
+                    highlightMoveTime);
+            }
+        }
+
         public void SetText(string text)
         {
             dialogueBoxLabel.text = text;
-            ShowDialogueBox(true);
+            ShowDialogueBox();
         }
 
         public void SetName(string name)
         {
             nameLabel.text = name;
-            ShowNameBox(true);
+            ShowNameBox();
         }
 
-        public void ShowDialogueBox(bool show)
+        public void ShowDialogueBox()
         {
-            if (show && !dialogueBoxVisible)
+            if (!dialogueBoxVisible)
             {
                 animator.SetTrigger("Show Dialogue Box");
                 dialogueBoxVisible = true;
             }
-            else if (!show && dialogueBoxVisible)
+        }
+
+        public void HideDialogueBox()
+        {
+            if (dialogueBoxVisible)
             {
                 animator.SetTrigger("Hide Dialogue Box");
                 dialogueBoxVisible = false;
             }
         }
 
-        public void ShowNameBox(bool show)
+        public void ShowNameBox()
         {
-            if (show && !nameBoxVisible)
+            if (!nameBoxVisible)
             {
                 animator.SetTrigger("Show Name Box");
                 nameBoxVisible = true;
             }
-            else if (!show && nameBoxVisible)
+        }
+
+        public void HideNameBox()
+        {
+            if (nameBoxVisible)
             {
                 animator.SetTrigger("Hide Name Box");
                 nameBoxVisible = false;
             }
         }
 
-        public void ShowOptionsBox(bool show)
+        public void ShowOptionsBox(int defaultIndex)
         {
-            if (show && !optionsBoxVisible)
+            if (!optionsBoxVisible)
             {
                 animator.SetTrigger("Show Options Box");
                 optionsBoxVisible = true;
+
+                selectedOptionIndex = defaultIndex;
+                optionHighlight.anchoredPosition = GetOptionHighlightDestination();
+                optionHighlightAnimator.SetBool("Confirmed", false);
             }
-            else if (!show && optionsBoxVisible)
+        }
+
+        public void HideOptionsBox()
+        {
+            if (optionsBoxVisible)
             {
                 animator.SetTrigger("Hide Options Box");
                 optionsBoxVisible = false;
+
+                optionHighlightAnimator.SetBool("Confirmed", true);
             }
         }
 
@@ -96,13 +134,25 @@ namespace ClementTodd_v0_0_1
             }
         }
 
+        public void SetSelectedOptionIndex(int index)
+        {
+            selectedOptionIndex = index;
+        }
+
+        private Vector2 GetOptionHighlightDestination()
+        {
+            return new Vector2(
+                    optionHighlight.anchoredPosition.x,
+                    optionLabels[selectedOptionIndex].rectTransform.anchoredPosition.y);
+        }
+
         public void OnDialogueStarted() { }
 
         public void OnDialogueEnded()
         {
-            ShowDialogueBox(false);
-            ShowNameBox(false);
-            ShowOptionsBox(false);
+            HideDialogueBox();
+            HideNameBox();
+            HideOptionsBox();
         }
     }
 }

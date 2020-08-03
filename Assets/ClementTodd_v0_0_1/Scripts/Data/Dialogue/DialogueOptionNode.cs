@@ -20,16 +20,14 @@ namespace ClementTodd_v0_0_1
 				DialogueManager.Instance.canvas.SetOptionText(i, text);
 			}
 
-			DialogueManager.Instance.canvas.ShowOptionsBox(true);
-
-			Debug.Log("SELECTED: " + LocalizationManager.Instance.GetString(DialogueGraph.textData, optionKeys[choiceIndex]));
+			DialogueManager.Instance.canvas.ShowOptionsBox(choiceIndex);
 		}
 
 		public override void OnSubmitPressed(InputAction.CallbackContext context)
 		{
 			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
 			{
-				DialogueManager.Instance.canvas.ShowOptionsBox(false);
+				DialogueManager.Instance.canvas.HideOptionsBox();
 				DialogueGraph.ExecuteNextNode(choiceIndex);
 			}
 		}
@@ -59,7 +57,7 @@ namespace ClementTodd_v0_0_1
 					}
 				}
 
-				Debug.Log("SELECTED: " + LocalizationManager.Instance.GetString(DialogueGraph.textData, optionKeys[choiceIndex]));
+				DialogueManager.Instance.canvas.SetSelectedOptionIndex(choiceIndex);
 			}
 		}
 	}
