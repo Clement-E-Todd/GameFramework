@@ -30,7 +30,7 @@ namespace ClementTodd_v0_0_1
 			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
 			{
 				DialogueManager.Instance.canvas.ShowOptionsBox(false);
-				DialogueGraph.Next(choiceIndex);
+				DialogueGraph.ExecuteNextNode(choiceIndex);
 			}
 		}
 

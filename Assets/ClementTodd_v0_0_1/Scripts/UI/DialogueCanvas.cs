@@ -3,33 +3,106 @@ using TMPro;
 
 namespace ClementTodd_v0_0_1
 {
-    public class DialogueCanvas : MonoBehaviour
+    public class DialogueCanvas : MonoBehaviour, IDialogueListener
     {
-        public TextMeshProUGUI dialogueBoxText;
-        public TextMeshProUGUI[] optionText;
+        public Animator animator;
+
+        public TextMeshProUGUI dialogueBoxLabel;
+        public TextMeshProUGUI nameLabel;
+        public TextMeshProUGUI[] optionLabels;
+
+        private bool dialogueBoxVisible = false;
+        private bool nameBoxVisible = false;
+        private bool optionsBoxVisible = false;
+
+        private void OnEnable()
+        {
+            DialogueManager.Instance.AddListener(this);
+        }
+
+        private void OnDisable()
+        {
+            if (DialogueManager.Instance)
+            {
+                DialogueManager.Instance.RemoveListener(this);
+            }
+        }
 
         public void SetText(string text)
         {
-            dialogueBoxText.text = text;
+            dialogueBoxLabel.text = text;
+            ShowDialogueBox(true);
+        }
+
+        public void SetName(string name)
+        {
+            nameLabel.text = name;
+            ShowNameBox(true);
+        }
+
+        public void ShowDialogueBox(bool show)
+        {
+            if (show && !dialogueBoxVisible)
+            {
+                animator.SetTrigger("Show Dialogue Box");
+                dialogueBoxVisible = true;
+            }
+            else if (!show && dialogueBoxVisible)
+            {
+                animator.SetTrigger("Hide Dialogue Box");
+                dialogueBoxVisible = false;
+            }
+        }
+
+        public void ShowNameBox(bool show)
+        {
+            if (show && !nameBoxVisible)
+            {
+                animator.SetTrigger("Show Name Box");
+                nameBoxVisible = true;
+            }
+            else if (!show && nameBoxVisible)
+            {
+                animator.SetTrigger("Hide Name Box");
+                nameBoxVisible = false;
+            }
         }
 
         public void ShowOptionsBox(bool show)
         {
-            Debug.LogFormat("STUB: ShowOptionsBox(show = {0})", show);
+            if (show && !optionsBoxVisible)
+            {
+                animator.SetTrigger("Show Options Box");
+                optionsBoxVisible = true;
+            }
+            else if (!show && optionsBoxVisible)
+            {
+                animator.SetTrigger("Hide Options Box");
+                optionsBoxVisible = false;
+            }
         }
 
         public void SetOptionText(int index, string text)
         {
-            optionText[index].text = text;
-            optionText[index].gameObject.SetActive(true);
+            optionLabels[index].text = text;
+            optionLabels[index].gameObject.SetActive(true);
         }
 
         public void ClearAllOptions()
         {
-            for (int i = 0; i < optionText.Length; i++)
+            for (int i = 0; i < optionLabels.Length; i++)
             {
-                optionText[i].gameObject.SetActive(false);
+                optionLabels[i].gameObject.SetActive(false);
             }
+        }
+
+        public void OnDialogueStarted() { }
+
+        public void OnDialogueEnded()
+        {
+            ShowDialogueBox(false);
+            ShowNameBox(false);
+            ShowOptionsBox(false);
         }
     }
 }

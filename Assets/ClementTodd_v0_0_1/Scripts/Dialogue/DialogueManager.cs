@@ -25,7 +25,7 @@ namespace ClementTodd_v0_0_1
 
         private List<IDialogueListener> listeners = new List<IDialogueListener>();
 
-        public void StartDialogue(DialogueGraph dialogue, DialogueNode startNode)
+        public void StartDialogue(DialogueGraph dialogue)
         {
             if (CurrentDialogue != null)
             {
@@ -33,17 +33,28 @@ namespace ClementTodd_v0_0_1
                 return;
             }
 
-            if (dialogue.BeginDialogue(startNode))
+            if (!dialogue.startNode)
             {
-                CurrentDialogue = dialogue;
-
-                InputManager.onInputReceived += OnInputReceived;
-
-                for (int i = 0; i < listeners.Count; i++)
-                {
-                    listeners[i].OnDialogueStarted();
-                }
+                Debug.LogError("Can't start dialogue: no start node was set.");
+                return;
             }
+
+            if (dialogue.startNode.graph != dialogue)
+            {
+                Debug.LogError("Can't start dialogue: start node does not belong to this dialogue graph.");
+                return;
+            }
+
+            CurrentDialogue = dialogue;
+
+            InputManager.onInputReceived += OnInputReceived;
+
+            for (int i = 0; i < listeners.Count; i++)
+            {
+                listeners[i].OnDialogueStarted();
+            }
+
+            CurrentDialogue.ExecuteStartNode();
         }
 
         public void EndDialogue()

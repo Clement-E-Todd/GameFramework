@@ -1,14 +1,16 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ClementTodd_v0_0_1
 {
 	public class DialogueBoxNode : DialogueNode
 	{
 		public string key;
+		public TextAsset overrideData;
 
 		public override void Execute()
 		{
-			string text = LocalizationManager.Instance.GetString(DialogueGraph.textData, key);
+			string text = LocalizationManager.Instance.GetString(overrideData ? overrideData : DialogueGraph.textData, key);
 			DialogueManager.Instance.canvas.SetText(text);
 		}
 
@@ -16,7 +18,7 @@ namespace ClementTodd_v0_0_1
 		{
 			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
 			{
-				DialogueGraph.Next();
+				DialogueGraph.ExecuteNextNode();
 			}
 		}
 	}

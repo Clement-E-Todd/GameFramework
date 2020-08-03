@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using XNode;
 
 namespace ClementTodd_v0_0_1
@@ -18,25 +19,26 @@ namespace ClementTodd_v0_0_1
 			}
 		}
 
-		public TextAsset textData;
-
 		public DialogueNode CurrentNode { get; private set; }
 
-		public bool BeginDialogue(DialogueNode startNode)
+		public DialogueNode startNode;
+
+		public TextAsset textData;
+
+		public void ExecuteStartNode()
 		{
-			if (startNode.graph != this)
+			if (IsActive)
 			{
-				Debug.LogError("Can't start dialogue; start node does not belong to this dialogue graph.");
-				return false;
+				CurrentNode = startNode;
+				CurrentNode.Execute();
 			}
-
-			CurrentNode = startNode;
-			CurrentNode.Execute();
-
-			return true;
+			else
+			{
+				Debug.LogWarning("Can't execute node: this dialogue is not active.");
+			}
 		}
 
-		public void Next(int connectionIndex = 0)
+		public void ExecuteNextNode(int connectionIndex = 0)
 		{
 			if (IsActive)
 			{
@@ -51,6 +53,10 @@ namespace ClementTodd_v0_0_1
 				{
 					DialogueManager.Instance.EndDialogue();
 				}
+			}
+			else
+			{
+				Debug.LogWarning("Can't execute node: this dialogue is not active.");
 			}
 		}
 	}

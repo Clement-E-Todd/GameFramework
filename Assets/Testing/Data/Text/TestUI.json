@@ -8,20 +8,5 @@
     {
         "EN": "interaction with",
         "TEST": "interactionay ithway"
-    },
-    "NPC1_Name":
-    {
-        "EN": "NPC1",
-        "TEST": "Iggypay Oneay"
-    },
-    "NPC2_Name":
-    {
-        "EN": "NPC2",
-        "TEST": "Iggypay Otway"
-    },
-    "NPC3_Name":
-    {
-        "EN": "NPC3",
-        "TEST": "Iggypay Eethray"
     }
 }
