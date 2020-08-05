@@ -130,5 +130,18 @@ namespace ClementTodd_v0_0_1
                 CurrentDialogue.CurrentNode.OnCancelPressed(context);
             }
         }
+
+        public void OnOptionSelected(int index)
+        {
+            if (CurrentDialogue.CurrentNode is DialogueOptionNode)
+            {
+                canvas.HideOptionsBox();
+                CurrentDialogue.ExecuteNextNode(index);
+            }
+            else
+            {
+                Debug.LogWarning("An option selection was received, but the current node is incompatible.");
+            }
+        }
     }
 }

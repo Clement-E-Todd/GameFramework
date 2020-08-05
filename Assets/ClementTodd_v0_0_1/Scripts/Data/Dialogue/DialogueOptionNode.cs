@@ -7,11 +7,8 @@ namespace ClementTodd_v0_0_1
 	{
 		public string[] optionKeys;
 
-		private int choiceIndex = 0;
 		public override void Execute()
 		{
-			choiceIndex = 0;
-
 			DialogueManager.Instance.canvas.ClearAllOptions();
 
 			for (int i = 0; i < optionKeys.Length; i++)
@@ -19,46 +16,19 @@ namespace ClementTodd_v0_0_1
 				string text = LocalizationManager.Instance.GetString(DialogueGraph.textData, optionKeys[i]);
 				DialogueManager.Instance.canvas.SetOptionText(i, text);
 			}
+			DialogueManager.Instance.canvas.UpdateOptionLinks();
 
-			DialogueManager.Instance.canvas.ShowOptionsBox(choiceIndex);
+			DialogueManager.Instance.canvas.ShowOptionsBox();
 		}
 
 		public override void OnSubmitPressed(InputAction.CallbackContext context)
 		{
-			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
-			{
-				DialogueManager.Instance.canvas.HideOptionsBox();
-				DialogueGraph.ExecuteNextNode(choiceIndex);
-			}
+			DialogueManager.Instance.canvas.optionMenu.OnConfirm(context);
 		}
 
 		public override void OnNavigate(InputAction.CallbackContext context)
 		{
-			// TODO: Use a proper menu navigation system instead of this logic.
-			// This options navigation has been left intentionally janky but functional.
-			if (context.started)
-			{
-				Vector2 navigation = (Vector2)context.ReadValueAsObject();
-
-				if (navigation.y > 0f)
-				{
-					choiceIndex--;
-					if (choiceIndex < 0)
-					{
-						choiceIndex += optionKeys.Length;
-					}
-				}
-				else if (navigation.y < 0f)
-				{
-					choiceIndex++;
-					if (choiceIndex >= optionKeys.Length)
-					{
-						choiceIndex -= optionKeys.Length;
-					}
-				}
-
-				DialogueManager.Instance.canvas.SetSelectedOptionIndex(choiceIndex);
-			}
+			DialogueManager.Instance.canvas.optionMenu.OnNavigate(context);
 		}
 	}
 }

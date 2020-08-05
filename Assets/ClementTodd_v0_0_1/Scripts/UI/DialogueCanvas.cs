@@ -8,18 +8,15 @@ namespace ClementTodd_v0_0_1
         public Animator animator;
 
         public TextMeshProUGUI dialogueBoxLabel;
+        
         public TextMeshProUGUI nameLabel;
-        public TextMeshProUGUI[] optionLabels;
-        public RectTransform optionHighlight;
-        public Animator optionHighlightAnimator;
+
+        public Menu optionMenu;
+        public MenuItem[] options;
 
         private bool dialogueBoxVisible = false;
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
-
-        private int selectedOptionIndex = 0;
-        public float highlightMoveTime = 0.1f;
-        private Vector2 highlightMoveVelocity;
 
         private void OnEnable()
         {
@@ -31,20 +28,6 @@ namespace ClementTodd_v0_0_1
             if (DialogueManager.Instance)
             {
                 DialogueManager.Instance.RemoveListener(this);
-            }
-        }
-
-        private void Update()
-        {
-            // Dynamically animate the option highlight towards the selected option
-            if (optionsBoxVisible)
-            {
-                Vector2 destination = GetOptionHighlightDestination(); ;
-                optionHighlight.anchoredPosition = Vector2.SmoothDamp(
-                    optionHighlight.anchoredPosition,
-                    destination,
-                    ref highlightMoveVelocity,
-                    highlightMoveTime);
             }
         }
 
@@ -96,16 +79,15 @@ namespace ClementTodd_v0_0_1
             }
         }
 
-        public void ShowOptionsBox(int defaultIndex)
+        public void ShowOptionsBox()
         {
             if (!optionsBoxVisible)
             {
                 animator.SetTrigger("Show Options Box");
                 optionsBoxVisible = true;
 
-                selectedOptionIndex = defaultIndex;
-                optionHighlight.anchoredPosition = GetOptionHighlightDestination();
-                optionHighlightAnimator.SetBool("Confirmed", false);
+                optionMenu.SetSelectionToDefault();
+                optionMenu.EnableSelection();
             }
         }
 
@@ -115,35 +97,41 @@ namespace ClementTodd_v0_0_1
             {
                 animator.SetTrigger("Hide Options Box");
                 optionsBoxVisible = false;
-
-                optionHighlightAnimator.SetBool("Confirmed", true);
             }
         }
 
         public void SetOptionText(int index, string text)
         {
-            optionLabels[index].text = text;
-            optionLabels[index].gameObject.SetActive(true);
+            options[index].gameObject.SetActive(true);
+
+            TextMeshProUGUI label = options[index].GetComponent<TextMeshProUGUI>();
+            label.text = text;
+        }
+
+        public void UpdateOptionLinks()
+        {
+            int highestEnabledIndex = 0;
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (options[i].gameObject.activeSelf)
+                {
+                    highestEnabledIndex = i;
+                }
+            }
+            for (int i = 0; i <= highestEnabledIndex; i++)
+            {
+                options[i].neighbours.up = options[i > 0 ? i - 1 : highestEnabledIndex];
+                options[i].neighbours.down = options[i < highestEnabledIndex ? i + 1 : 0];
+            }
         }
 
         public void ClearAllOptions()
         {
-            for (int i = 0; i < optionLabels.Length; i++)
+            for (int i = 0; i < options.Length; i++)
             {
-                optionLabels[i].gameObject.SetActive(false);
+                options[i].gameObject.SetActive(false);
             }
-        }
-
-        public void SetSelectedOptionIndex(int index)
-        {
-            selectedOptionIndex = index;
-        }
-
-        private Vector2 GetOptionHighlightDestination()
-        {
-            return new Vector2(
-                    optionHighlight.anchoredPosition.x,
-                    optionLabels[selectedOptionIndex].rectTransform.anchoredPosition.y);
         }
 
         public void OnDialogueStarted() { }
