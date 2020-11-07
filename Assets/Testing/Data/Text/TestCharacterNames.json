@@ -1,21 +1,22 @@
-{,
+{
     "Player_Name": {
         "EN": "Player",
         "TEST": "Ayerplay"
     },
-    "NPC1_Name":
-    {
+    "NPC1_Name": {
         "EN": "NPC1",
         "TEST": "Iggypay Oneay"
     },
-    "NPC2_Name":
-    {
+    "NPC2_Name": {
         "EN": "NPC2",
         "TEST": "Iggypay Otway"
     },
-    "NPC3_Name":
-    {
+    "NPC3_Name": {
         "EN": "NPC3",
         "TEST": "Iggypay Eethray"
+    },
+    "TODO_Name": {
+        "EN": "TO DO",
+        "TEST": "OTAY ODAY"
     }
 }

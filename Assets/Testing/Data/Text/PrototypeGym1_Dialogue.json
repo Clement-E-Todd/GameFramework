@@ -25,5 +25,35 @@
     },
     "NPC1_Choice1_Option3_Response": {
         "EN": "Thanks for stopping  by!"
+    },
+
+    "NPC2_Line1": {
+        "EN": "Hmmmmm?"
+    },
+    "NPC2_Line2": {
+        "EN": "Weeell! Hello there, little one!"
+    },
+    "NPC2_Line3": {
+        "EN": "Thank you for taking the time to talk to your giant neighbours. You've really brightened my day!"
+    },
+    "NPC2_Line4": {
+        "EN": "I do wish that I could offer you something for your kindness. Do have fun running around and playing in this gym!"
+    },
+
+    "NPC3_Line1": {
+        "EN": "This here is a test of text overflowing the dialogue box! To pass this test, the dialogue system should automatically split up this line of dialogue, which is one single large line of text, into as many seperate text boxes as are needed to allow us to read it completely. Or rather, the text should scroll down on button press until the end of the dialogue is reached rather than closing and reopening the dialogue box between each chunk."
+    },
+
+    "TODO1": {
+        "EN": "Let dialogue be written to the box letter-by-letter."
+    },
+    "TODO2": {
+        "EN": "Let NPC 2's dialogue start at line 4 after speaking to them for the first time."
+    },
+    "TODO3": {
+        "EN": "Let NPC 3's dialogue scroll through the overflowing text."
+    },
+    "TODO4": {
+        "EN": "Cinematic camera angles during NPC 2's dialogue."
     }
 }
