@@ -9,6 +9,7 @@ namespace ClementTodd_v0_0_1
         public float runSpeed = 10f;
 
         public float turnSpeed = 360f;
+        public float runTurnSpeed = 180f;
 
         public float airFriction = 0.05f;
 
@@ -20,7 +21,7 @@ namespace ClementTodd_v0_0_1
 
         private bool isRunning = false;
 
-        private Vector3 momentum = Vector3.zero;
+        private Vector3 moveVelocity = Vector3.zero;
 
         private GravityReceiver gravityReceiver;
 
@@ -60,38 +61,47 @@ namespace ClementTodd_v0_0_1
                     maxGroundDistance);
             }
 
-            if (intendedMove.sqrMagnitude >= minMove || momentum.sqrMagnitude >= minMove || isSlippingOffLedge)
+            if (intendedMove.sqrMagnitude >= minMove || moveVelocity.sqrMagnitude >= minMove || isSlippingOffLedge)
             {
                 // Calculate the variables needed to move based on the character's human-or-computer-controller behaviour
                 Vector3 moveDirection = new Vector3(intendedMove.x, 0f, intendedMove.y);
                 float speed = isRunning ? runSpeed : this.speed;
+                float turnSpeed = isRunning ? runTurnSpeed : this.turnSpeed;
                 float friction = gravityReceiver.isGrounded ? gravityReceiver.gripOnGround : Mathf.Min(gravityReceiver.groundFriction, airFriction);
-                momentum = Vector3.MoveTowards(momentum, moveDirection * speed, speed * friction);
 
-                // If sliding down a slope, push momentum downwards
+                // If running, character's movement turns only as fast as the character rotates.
+                if (isRunning)
+                {
+                    moveDirection = Vector3.RotateTowards(transform.forward, moveDirection, turnSpeed * Time.fixedDeltaTime * Mathf.Deg2Rad, float.MaxValue);
+                }
+
+                // Accelerate the character's move velocity towards their inteded velocity.
+                moveVelocity = Vector3.MoveTowards(moveVelocity, moveDirection * speed, speed * friction);
+
+                // If sliding down a slope, push move velocity downwards to prevent the character from unintentionally lifting off of the ground
                 if (gravityReceiver.isSliding)
                 {
-                    float slideDot = Vector3.Dot(momentum, gravityReceiver.horizontalSlopeDirection);
+                    float slideDot = Vector3.Dot(moveVelocity, gravityReceiver.horizontalSlopeDirection);
                     if (slideDot < 0f)
                     {
-                        Vector3 targetSlideMomentum = momentum - (gravityReceiver.horizontalSlopeDirection * slideDot);
-                        momentum = Vector3.MoveTowards(momentum, targetSlideMomentum, maxUphillResistance * (1f - gravityReceiver.gripOnGround));
+                        Vector3 targetSlideVelocity = moveVelocity - (gravityReceiver.horizontalSlopeDirection * slideDot);
+                        moveVelocity = Vector3.MoveTowards(moveVelocity, targetSlideVelocity, maxUphillResistance * (1f - gravityReceiver.gripOnGround));
                     }
                 }
 
-                // If the character's momentum opposes their Rigidbody's velocity, reduce the velocity.
-                // Only works on the ground.
-                if (gravityReceiver.isGrounded && !Mathf.Approximately(momentum.sqrMagnitude, 0f))
+                // If the character's move velocity opposes their Rigidbody's velocity, reduce both the move and Rigidbody velocity.
+                // Only works on the ground because their is no traction in the air.
+                if (gravityReceiver.isGrounded && !Mathf.Approximately(moveVelocity.sqrMagnitude, 0f))
                 {
                     Vector3 velocityDirection = character.body.velocity.normalized;
-                    float opposingMomentum = -Vector3.Dot(momentum, velocityDirection);
+                    float opposingVelocity = -Vector3.Dot(moveVelocity, velocityDirection);
 
-                    if (opposingMomentum > 0f)
+                    if (opposingVelocity > 0f)
                     {
-                        Vector3 neutralizingForce = -velocityDirection * Mathf.Min(opposingMomentum, character.body.velocity.magnitude) * (1f - gravityReceiver.groundSlope);
+                        Vector3 neutralizingForce = -velocityDirection * Mathf.Min(opposingVelocity, character.body.velocity.magnitude) * (1f - gravityReceiver.groundSlope);
 
                         character.body.velocity += neutralizingForce;
-                        momentum -= neutralizingForce;
+                        moveVelocity -= neutralizingForce;
                     }
                 }
 
@@ -103,7 +113,7 @@ namespace ClementTodd_v0_0_1
                 }
 
                 // Calculate the actual amount by which the character should move
-                Vector3 movement = momentum;
+                Vector3 movement = moveVelocity;
 
                 if (gravityReceiver && gravityReceiver.isGrounded)
                 {
