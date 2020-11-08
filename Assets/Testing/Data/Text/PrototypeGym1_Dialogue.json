@@ -1,6 +1,6 @@
 {
     "NPC1_Line1": {
-        "EN": "Oh, hi! I'm a non-player character! My name is NPC1!"
+        "EN": "Oh, hi! I'm a <#FFCC00>non-player character<#FFFFFF>! My name is NPC1!"
     },
     "NPC1_Line2": {
         "EN": "What can I do for you, friend?"

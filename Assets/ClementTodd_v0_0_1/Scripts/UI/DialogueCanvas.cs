@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using TMPro;
+using System.Collections;
 
 namespace ClementTodd_v0_0_1
 {
@@ -18,6 +19,13 @@ namespace ClementTodd_v0_0_1
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
 
+        private void Awake()
+        {
+            Color32 textColor = dialogueBoxLabel.color;
+            textColor.a = 0;
+            dialogueBoxLabel.color = textColor;
+        }
+
         private void OnEnable()
         {
             DialogueManager.Instance.AddListener(this);
@@ -35,6 +43,71 @@ namespace ClementTodd_v0_0_1
         {
             dialogueBoxLabel.text = text;
             ShowDialogueBox();
+
+            StopAllCoroutines();
+            StartCoroutine(DoAnimatedTextReveal());
+        }
+
+        public void HideText()
+        {
+            StopAllCoroutines();
+
+            TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
+            Color32[] vertexColors;
+            Color32 c0 = dialogueBoxLabel.color;
+
+            for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
+            {
+                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
+                vertexColors = textInfo.meshInfo[materialIndex].colors32;
+                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+
+                c0 = textInfo.characterInfo[i].color;
+                c0.a = 0;
+
+                vertexColors[vertexIndex + 0] = c0;
+                vertexColors[vertexIndex + 1] = c0;
+                vertexColors[vertexIndex + 2] = c0;
+                vertexColors[vertexIndex + 3] = c0;
+            }
+
+            dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        }
+
+        private IEnumerator DoAnimatedTextReveal()
+        {
+            yield return new WaitForSecondsRealtime(0.1f);
+
+            TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
+            Color32[] vertexColors;
+            Color32 c0 = dialogueBoxLabel.color;
+
+            for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
+            {
+                // Get the index of the material used by the current character.
+                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
+
+                // Get the vertex colors of the mesh used by this text element (character or sprite).
+                vertexColors = textInfo.meshInfo[materialIndex].colors32;
+
+                // Get the index of the first vertex used by this text element.
+                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+
+                // Only change the vertex color if the text element is visible.
+                if (textInfo.characterInfo[i].isVisible)
+                {
+                    c0 = textInfo.characterInfo[i].color;
+                    c0.a = 255;
+
+                    vertexColors[vertexIndex + 0] = c0;
+                    vertexColors[vertexIndex + 1] = c0;
+                    vertexColors[vertexIndex + 2] = c0;
+                    vertexColors[vertexIndex + 3] = c0;
+                }
+
+                dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+                yield return new WaitForSecondsRealtime(0.01f);
+            }
         }
 
         public void SetName(string name)
@@ -138,6 +211,7 @@ namespace ClementTodd_v0_0_1
 
         public void OnDialogueEnded()
         {
+            HideText();
             HideDialogueBox();
             HideNameBox();
             HideOptionsBox();
