@@ -15,15 +15,32 @@ namespace ClementTodd_v0_0_1
         public Menu optionMenu;
         public MenuItem[] options;
 
+        private bool textVisible = false;
         private bool dialogueBoxVisible = false;
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
+
+        private struct CharacterAnimationData
+        {
+            public float fadeInDelay;
+            public float fadeInDuration;
+        }
+        public float defaultFadeInDelay = 0.01f;
+        public float defaultFadeInDuration = 0.01f;
+        private float characterAnimationStartTime;
+        private CharacterAnimationData[] characterAnimationData;
+        const float fadeOutDuration = 0.1f;
 
         private void Awake()
         {
             Color32 textColor = dialogueBoxLabel.color;
             textColor.a = 0;
             dialogueBoxLabel.color = textColor;
+        }
+
+        private void Update()
+        {
+            UpdateTextAnimation();
         }
 
         private void OnEnable()
@@ -42,48 +59,63 @@ namespace ClementTodd_v0_0_1
         public void SetText(string text)
         {
             dialogueBoxLabel.text = text;
-            ShowDialogueBox();
+            dialogueBoxLabel.ForceMeshUpdate();
 
-            StopAllCoroutines();
-            StartCoroutine(DoAnimatedTextReveal());
+            ShowDialogueBox();
+            DoShowTextAnimation();
         }
 
-        public void HideText()
+        private void DoShowTextAnimation()
         {
-            StopAllCoroutines();
+            textVisible = true;
+            characterAnimationStartTime = Time.unscaledTime;
+            characterAnimationData = new CharacterAnimationData[dialogueBoxLabel.textInfo.characterCount];
 
-            TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
-            Color32[] vertexColors;
-            Color32 c0 = dialogueBoxLabel.color;
+            float totalFadeInDelay = 0f;
 
             for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
             {
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
-                vertexColors = textInfo.meshInfo[materialIndex].colors32;
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+                if (i > 0)
+                {
+                    totalFadeInDelay += defaultFadeInDelay;
+                }
+                characterAnimationData[i].fadeInDelay = totalFadeInDelay;
+                characterAnimationData[i].fadeInDuration = defaultFadeInDuration;
+            }
+        }
 
-                c0 = textInfo.characterInfo[i].color;
-                c0.a = 0;
+        private void DoHideTextAnimation()
+        {
+            textVisible = false;
+            characterAnimationStartTime = Time.unscaledTime;
+        }
 
-                vertexColors[vertexIndex + 0] = c0;
-                vertexColors[vertexIndex + 1] = c0;
-                vertexColors[vertexIndex + 2] = c0;
-                vertexColors[vertexIndex + 3] = c0;
+        private void UpdateTextAnimation()
+        {
+            if (characterAnimationData == null)
+            {
+                return;
             }
 
-            dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-        }
-
-        private IEnumerator DoAnimatedTextReveal()
-        {
-            yield return new WaitForSecondsRealtime(0.1f);
-
             TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
             Color32[] vertexColors;
-            Color32 c0 = dialogueBoxLabel.color;
 
             for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
             {
+                var data = characterAnimationData[i];
+                float alpha = 0f;
+
+                if (textVisible)
+                {
+                    float animationTime = Time.unscaledTime - characterAnimationStartTime - data.fadeInDelay;
+                    alpha = Mathf.Clamp01(animationTime / data.fadeInDuration);
+                }
+                else
+                {
+                    float animationTime = Time.unscaledTime - characterAnimationStartTime;
+                    alpha = 1f - Mathf.Clamp01(animationTime / data.fadeInDuration);
+                }
+
                 // Get the index of the material used by the current character.
                 int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
 
@@ -96,18 +128,22 @@ namespace ClementTodd_v0_0_1
                 // Only change the vertex color if the text element is visible.
                 if (textInfo.characterInfo[i].isVisible)
                 {
-                    c0 = textInfo.characterInfo[i].color;
-                    c0.a = 255;
+                    Color32 color = textInfo.characterInfo[i].color;
+                    color.a = (byte)(255 * alpha);
 
-                    vertexColors[vertexIndex + 0] = c0;
-                    vertexColors[vertexIndex + 1] = c0;
-                    vertexColors[vertexIndex + 2] = c0;
-                    vertexColors[vertexIndex + 3] = c0;
+                    vertexColors[vertexIndex + 0] = color;
+                    vertexColors[vertexIndex + 1] = color;
+                    vertexColors[vertexIndex + 2] = color;
+                    vertexColors[vertexIndex + 3] = color;
                 }
-
-                dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-                yield return new WaitForSecondsRealtime(0.01f);
             }
+
+            dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        }
+
+        public void HideText()
+        {
+            textVisible = false;
         }
 
         public void SetName(string name)
