@@ -11,14 +11,17 @@ namespace ClementTodd_v0_0_1
 		public override void Execute()
 		{
 			string text = LocalizationManager.Instance.GetString(overrideData ? overrideData : DialogueGraph.textData, key);
-			DialogueManager.Instance.canvas.SetText(text);
-		}
+            DialogueManager.Instance.canvas.SetText(text);
+        }
 
 		public override void OnSubmitPressed(InputAction.CallbackContext context)
 		{
 			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
 			{
-				DialogueGraph.ExecuteNextNode();
+                if (!DialogueManager.Instance.canvas.TryAdvanceText())
+                {
+                    DialogueGraph.ExecuteNextNode();
+                }
 			}
 		}
 	}

@@ -27,7 +27,7 @@ namespace ClementTodd_v0_0_1
         }
         public float defaultFadeInDelay = 0.01f;
         public float defaultFadeInDuration = 0.01f;
-        private float characterAnimationStartTime;
+        private float characterAnimationStartTime = float.MinValue;
         private CharacterAnimationData[] characterAnimationData;
         const float fadeOutDuration = 0.1f;
 
@@ -65,6 +65,37 @@ namespace ClementTodd_v0_0_1
             DoShowTextAnimation();
         }
 
+        public bool TryAdvanceText()
+        {
+            // Remove all currently-visible text (INCLUDING RICH TEXT TAGS) from displayed line to make the overflow text visible.
+            int textIndex, richTextIndex;
+            for (textIndex = 0, richTextIndex = 0;
+                textIndex < dialogueBoxLabel.textInfo.characterCount && richTextIndex < dialogueBoxLabel.text.Length;
+                textIndex++, richTextIndex++)
+            {
+                // If the characters don't match in the text and rich text, we have hit a special instruction in the rich text, so we skip ahead in the rich text until we have found a match again.
+                while (dialogueBoxLabel.textInfo.characterInfo[textIndex].character != dialogueBoxLabel.text[richTextIndex] && richTextIndex < dialogueBoxLabel.text.Length)
+                {
+                    richTextIndex++;
+                }
+            }
+
+            if (richTextIndex < dialogueBoxLabel.text.Length)
+            {
+                dialogueBoxLabel.text = dialogueBoxLabel.text.Remove(0, richTextIndex);
+                dialogueBoxLabel.ForceMeshUpdate();
+
+                ShowDialogueBox();
+                DoShowTextAnimation();
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private void DoShowTextAnimation()
         {
             textVisible = true;
@@ -92,28 +123,30 @@ namespace ClementTodd_v0_0_1
 
         private void UpdateTextAnimation()
         {
-            if (characterAnimationData == null)
-            {
-                return;
-            }
-
             TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
             Color32[] vertexColors;
 
             for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
             {
-                var data = characterAnimationData[i];
                 float alpha = 0f;
 
                 if (textVisible)
                 {
-                    float animationTime = Time.unscaledTime - characterAnimationStartTime - data.fadeInDelay;
-                    alpha = Mathf.Clamp01(animationTime / data.fadeInDuration);
+                    if (characterAnimationData != null)
+                    {
+                        CharacterAnimationData data = characterAnimationData[i];
+                        float animationTime = Time.unscaledTime - characterAnimationStartTime - data.fadeInDelay;
+                        alpha = Mathf.Clamp01(animationTime / data.fadeInDuration);
+                    }
+                    else
+                    {
+                        alpha = 1f;
+                    }
                 }
                 else
                 {
                     float animationTime = Time.unscaledTime - characterAnimationStartTime;
-                    alpha = 1f - Mathf.Clamp01(animationTime / data.fadeInDuration);
+                    alpha = 1f - Mathf.Clamp01(animationTime / fadeOutDuration);
                 }
 
                 // Get the index of the material used by the current character.
