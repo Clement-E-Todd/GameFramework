@@ -21,8 +21,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -8542709233793703662}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: -7210489046334586212}
@@ -33,8 +33,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -8542709233793703662}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: -6487692851692118794}
@@ -66,8 +66,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -7210489046334586212}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: -5272052113002214622}
@@ -78,8 +78,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -7210489046334586212}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: -8542709233793703662}
@@ -111,8 +111,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -6487692851692118794}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: -8542709233793703662}
@@ -123,12 +123,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -6487692851692118794}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: previous
-        node: {fileID: -2873315231258702696}
-        reroutePoints: []
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -156,8 +153,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -5272052113002214622}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: -3916351437831355702}
@@ -168,8 +165,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -5272052113002214622}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: -7210489046334586212}
@@ -201,8 +198,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -3916351437831355702}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 2661624169031125547}
@@ -213,8 +210,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -3916351437831355702}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: -5272052113002214622}
@@ -224,48 +221,6 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   key: TODO3
-  overrideData: {fileID: 0}
---- !u!114 &-2873315231258702696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
-  m_Name: Dialogue Box
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1848, y: 280}
-  ports:
-    keys:
-    - previous
-    - next
-    values:
-    - _fieldName: previous
-      _node: {fileID: -2873315231258702696}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: next
-        node: {fileID: -6487692851692118794}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: next
-      _node: {fileID: -2873315231258702696}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  key: TODO8
   overrideData: {fileID: 0}
 --- !u!114 &-530624393511940806
 MonoBehaviour:
@@ -288,8 +243,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: -530624393511940806}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 0
       _connectionType: 0
@@ -297,8 +252,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: -530624393511940806}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 547712038432978409}
@@ -334,7 +289,6 @@ MonoBehaviour:
   - {fileID: -7210489046334586212}
   - {fileID: -8542709233793703662}
   - {fileID: -6487692851692118794}
-  - {fileID: -2873315231258702696}
   startNode: {fileID: -530624393511940806}
   textData: {fileID: 4900000, guid: 256beb8fac244a54fb2bea32cce8cca3, type: 3}
 --- !u!114 &547712038432978409
@@ -358,8 +312,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 547712038432978409}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: -530624393511940806}
@@ -370,8 +324,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 547712038432978409}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 2081513072324654905}
@@ -403,8 +357,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 1202449300415116422}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 5916534261963403162}
@@ -415,8 +369,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 1202449300415116422}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 2661624169031125547}
@@ -448,8 +402,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 2081513072324654905}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 547712038432978409}
@@ -460,8 +414,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 2081513072324654905}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 7350571022827376816}
@@ -493,8 +447,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 2661624169031125547}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 1202449300415116422}
@@ -505,8 +459,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 2661624169031125547}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: -3916351437831355702}
@@ -538,8 +492,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 5916534261963403162}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 7350571022827376816}
@@ -550,8 +504,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 5916534261963403162}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 1202449300415116422}
@@ -583,8 +537,8 @@ MonoBehaviour:
     values:
     - _fieldName: previous
       _node: {fileID: 7350571022827376816}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
         node: {fileID: 2081513072324654905}
@@ -595,8 +549,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: next
       _node: {fileID: 7350571022827376816}
-      _typeQualifiedName: ClementTodd_v0_0_1.DialogueNode+Connection, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
         node: {fileID: 5916534261963403162}

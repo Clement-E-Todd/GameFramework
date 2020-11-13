@@ -1,4 +1,4 @@
-﻿using ClementTodd_v0_0_1;
+﻿using ClementTodd;
 using UnityEngine;
 
 public class TestInteraction : InteractionZone
