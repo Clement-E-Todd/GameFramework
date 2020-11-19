@@ -43,25 +43,23 @@
     "NPC3_Line1": {
         "EN": "This here is a test of text overflowing the dialogue box! To pass this test, the dialogue system should automatically split up this line of dialogue, which is one single large line of text, into as many seperate text boxes as are needed to allow us to read it completely. The text should advance each time the player presses the button until the end of the long line is reached. Thank you so much for attending my talk today. We went a little over time today so we won't have time for the Q&A unfortunately, but catch me at the afterparty if you wanna chat!"
     },
+
     "TODO1": {
-        "EN": "Hide interaction prompt while dialogue is in progress."
-    },
-    "TODO2": {
         "EN": "Change properties such as typewriter speed and animations partway through a line of dialogue."
     },
-    "TODO3": {
+    "TODO2": {
         "EN": "Add a dialogue node to have player face the target."
     },
-    "TODO4": {
+    "TODO3": {
         "EN": "Allow the player to skip the typewriter effect with a button press."
     },
-    "TODO5": {
+    "TODO4": {
         "EN": "Text animations such as waves and jiggles"
     },
-    "TODO6": {
+    "TODO5": {
         "EN": "Cinematic camera angles during NPC 2's dialogue."
     },
-    "TODO7": {
+    "TODO6": {
         "EN": "Let NPC 2's dialogue start at line 4 after speaking to them for the first time."
     }
 }

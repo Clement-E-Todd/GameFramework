@@ -35,10 +35,7 @@ MonoBehaviour:
       _node: {fileID: -8542709233793703662}
       _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: previous
-        node: {fileID: -6487692851692118794}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -89,48 +86,6 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   key: TODO5
-  overrideData: {fileID: 0}
---- !u!114 &-6487692851692118794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
-  m_Name: Dialogue Box
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1528, y: 280}
-  ports:
-    keys:
-    - previous
-    - next
-    values:
-    - _fieldName: previous
-      _node: {fileID: -6487692851692118794}
-      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: next
-        node: {fileID: -8542709233793703662}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: next
-      _node: {fileID: -6487692851692118794}
-      _typeQualifiedName: ClementTodd.DialogueNode+Connection, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  key: TODO7
   overrideData: {fileID: 0}
 --- !u!114 &-5272052113002214622
 MonoBehaviour:
@@ -288,7 +243,6 @@ MonoBehaviour:
   - {fileID: 5916534261963403162}
   - {fileID: -7210489046334586212}
   - {fileID: -8542709233793703662}
-  - {fileID: -6487692851692118794}
   startNode: {fileID: -530624393511940806}
   textData: {fileID: 4900000, guid: 256beb8fac244a54fb2bea32cce8cca3, type: 3}
 --- !u!114 &547712038432978409

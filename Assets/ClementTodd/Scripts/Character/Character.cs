@@ -16,12 +16,15 @@ namespace ClementTodd
         private void Awake()
         {
             body = GetComponent<Rigidbody>();
+        }
 
+        private void Start()
+        {
+            // Init control state
             if (defaultControlState == null)
             {
                 defaultControlState = GetComponent<CharacterControlState>();
             }
-            
             SetControlState(defaultControlState);
         }
 
