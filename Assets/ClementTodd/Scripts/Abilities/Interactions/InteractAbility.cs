@@ -12,10 +12,17 @@ namespace ClementTodd
         public GameObject arrowUIPrefab;
         private GameObject arrowUI;
 
+        private bool enableInteractionUI = false;
+
         public void Interact()
         {
             if (targetInteraction)
             {
+                if (HUD.instance && enableInteractionUI)
+                {
+                    HUD.instance.OnPlayerInteractionTriggered();
+                }
+
                 targetInteraction.DoInteraction(this);
             }
         }
@@ -29,7 +36,49 @@ namespace ClementTodd
             }
         }
 
+        private void OnEnable()
+        {
+            character.OnControlStateEnter += OnStateEnter;
+        }
+
+        private void OnDisable()
+        {
+            character.OnControlStateEnter -= OnStateEnter;
+        }
+
         private void FixedUpdate()
+        {
+            ScanForTargets();
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            InteractionZone interactable = other.GetComponent<InteractionZone>();
+            if (interactable && !interactablesInRange.Contains(interactable))
+            {
+                interactablesInRange.Add(interactable);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            InteractionZone interactable = other.GetComponent<InteractionZone>();
+            if (interactable)
+            {
+                interactablesInRange.Remove(interactable);
+            }
+        }
+
+        private void OnStateEnter(CharacterControlState state)
+        {
+            // Clear our target when transitioning between states
+            targetInteraction = null;
+
+            // Only enable HUD animations if the character is human-controlled
+            enableInteractionUI = state is HumanCharacterControlState;
+        }
+
+        private void ScanForTargets()
         {
             // Scan any interation zones in range to see which one can be used, if any.
             InteractionZone previousTarget = targetInteraction;
@@ -73,12 +122,16 @@ namespace ClementTodd
                 }
             }
 
-            // Notify the target if it has just started being targeted
-            if (targetInteraction != previousTarget && tag == "Player")
+            // Show or hide the interaction prompt UI in the HUD when the player's target changes
+            if (HUD.instance && enableInteractionUI && targetInteraction != previousTarget)
             {
                 if (targetInteraction)
                 {
-                    targetInteraction.OnTargetedByPlayer();
+                    string targetName = targetInteraction.GetTargetName();
+                    string actionName = targetInteraction.GetActionName();
+                    string preposition = targetInteraction.GetPreposition();
+
+                    HUD.instance.ShowInteractionPrompt(actionName, preposition + " " + targetName);
                 }
                 else if (HUD.instance)
                 {
@@ -106,24 +159,6 @@ namespace ClementTodd
                     arrowUI.SetActive(false);
                     arrowUI.transform.SetParent(null);
                 }
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            InteractionZone interactable = other.GetComponent<InteractionZone>();
-            if (interactable && !interactablesInRange.Contains(interactable))
-            {
-                interactablesInRange.Add(interactable);
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            InteractionZone interactable = other.GetComponent<InteractionZone>();
-            if (interactable)
-            {
-                interactablesInRange.Remove(interactable);
             }
         }
     }

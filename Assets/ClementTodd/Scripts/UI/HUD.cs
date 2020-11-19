@@ -29,5 +29,10 @@ namespace ClementTodd
         {
             animator.SetTrigger("Hide Interaction Prompt");
         }
+
+        public void OnPlayerInteractionTriggered()
+        {
+            animator.SetTrigger("Interaction Triggered");
+        }
     }
 }

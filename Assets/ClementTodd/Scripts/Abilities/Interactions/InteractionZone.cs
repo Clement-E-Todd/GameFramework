@@ -22,12 +22,19 @@ namespace ClementTodd
             return !callerMustFaceSource || (sourceTransform && Vector3.Dot(callerTransform.forward, sourceTransform.position - callerTransform.transform.position) > 0f);
         }
 
-        public void OnTargetedByPlayer()
+        public string GetTargetName()
         {
-            string actionName = LocalizationManager.Instance.GetString(textData, actionNameTextKey);
-            string preposition = LocalizationManager.Instance.GetString(textData, prepositionTextKey);
+            return sourceTransform.name;
+        }
 
-            HUD.instance.ShowInteractionPrompt(actionName, preposition + " " + sourceTransform.name);
+        public string GetActionName()
+        {
+            return LocalizationManager.Instance.GetString(textData, actionNameTextKey);
+        }
+
+        public string GetPreposition()
+        {
+            return LocalizationManager.Instance.GetString(textData, prepositionTextKey);
         }
     }
 }

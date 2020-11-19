@@ -2,29 +2,34 @@
 
 namespace ClementTodd
 {
-    public class PlayerCharacter : Character, IDialogueListener
+    public class PlayerCharacter : Character
     {
-        public PlayerInputState playerInputState;
-        public ScriptedCharacterState scriptedCharacterState;
+        public HumanCharacterControlState playerInputState;
+        public ComputerCharacterControlState scriptedCharacterState;
 
         private void OnEnable()
         {
-            DialogueManager.Instance.AddListener(this);
+            if (DialogueManager.Instance)
+            {
+                DialogueManager.Instance.OnDialogueStarted += OnDialogueStarted;
+                DialogueManager.Instance.OnDialogueEnded += OnDialogueEnded;
+            }
         }
 
         private void OnDisable()
         {
             if (DialogueManager.Instance)
             {
-                DialogueManager.Instance.RemoveListener(this);
+                DialogueManager.Instance.OnDialogueStarted -= OnDialogueStarted;
+                DialogueManager.Instance.OnDialogueEnded -= OnDialogueEnded;
             }
         }
 
         public void OnDialogueStarted()
         {
-            if (CurrentState == playerInputState)
+            if (CurrentControlState == playerInputState)
             {
-                SetState(scriptedCharacterState);
+                SetControlState(scriptedCharacterState);
             }
             else
             {
@@ -34,9 +39,9 @@ namespace ClementTodd
 
         public void OnDialogueEnded()
         {
-            if (CurrentState == scriptedCharacterState)
+            if (CurrentControlState == scriptedCharacterState)
             {
-                SetState(playerInputState);
+                SetControlState(playerInputState);
             }
             else
             {

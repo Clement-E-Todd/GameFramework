@@ -7,33 +7,38 @@ namespace ClementTodd
     {
         public Rigidbody body { get; private set; }
 
-        public BehaviourState defaultState;
-        public BehaviourState CurrentState { get; private set; }
+        public CharacterControlState defaultControlState;
+        public CharacterControlState CurrentControlState { get; private set; }
+
+        public System.Action<CharacterControlState> OnControlStateEnter;
+        public System.Action<CharacterControlState> OnControlStateExit;
 
         private void Awake()
         {
             body = GetComponent<Rigidbody>();
 
-            if (defaultState == null)
+            if (defaultControlState == null)
             {
-                defaultState = GetComponent<BehaviourState>();
+                defaultControlState = GetComponent<CharacterControlState>();
             }
-
-            SetState(defaultState);
+            
+            SetControlState(defaultControlState);
         }
 
-        protected void SetState(BehaviourState state)
+        protected void SetControlState(CharacterControlState state)
         {
-            if (CurrentState)
+            if (CurrentControlState)
             {
-                CurrentState.OnStateExit();
+                CurrentControlState.OnStateExit();
+                OnControlStateExit?.Invoke(CurrentControlState);
             }
 
-            CurrentState = state;
+            CurrentControlState = state;
 
-            if (CurrentState)
+            if (CurrentControlState)
             {
-                CurrentState.OnStateEnter();
+                CurrentControlState.OnStateEnter();
+                OnControlStateEnter?.Invoke(CurrentControlState);
             }
         }
     }

@@ -2,7 +2,7 @@
 
 namespace ClementTodd
 {
-    public abstract class BehaviourState : MonoBehaviour
+    public abstract class CharacterControlState : MonoBehaviour
     {
         private Character _Character;
         protected Character Character
@@ -21,7 +21,7 @@ namespace ClementTodd
         {
             get
             {
-                return Character.CurrentState == this;
+                return Character.CurrentControlState == this;
             }
         }
 

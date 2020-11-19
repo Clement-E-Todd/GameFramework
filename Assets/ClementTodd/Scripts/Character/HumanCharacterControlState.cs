@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 namespace ClementTodd
 {
-    public class PlayerInputState : BehaviourState, IInputReceiver
+    public class HumanCharacterControlState : CharacterControlState, IInputReceiver
     {
         [SerializeField]
         private InteractAbility interactAbility = null;

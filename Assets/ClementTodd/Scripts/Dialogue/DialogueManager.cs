@@ -1,5 +1,4 @@
-﻿using Boo.Lang;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace ClementTodd
@@ -23,7 +22,8 @@ namespace ClementTodd
 
         public DialogueGraph CurrentDialogue { get; private set; }
 
-        private List<IDialogueListener> listeners = new List<IDialogueListener>();
+        public System.Action OnDialogueStarted;
+        public System.Action OnDialogueEnded;
 
         public void StartDialogue(DialogueGraph dialogue)
         {
@@ -49,10 +49,7 @@ namespace ClementTodd
 
             InputManager.onInputReceived += OnInputReceived;
 
-            for (int i = 0; i < listeners.Count; i++)
-            {
-                listeners[i].OnDialogueStarted();
-            }
+            OnDialogueStarted?.Invoke();
 
             CurrentDialogue.ExecuteStartNode();
         }
@@ -61,28 +58,12 @@ namespace ClementTodd
         {
             if (CurrentDialogue != null)
             {
-                for (int i = 0; i < listeners.Count; i++)
-                {
-                    listeners[i].OnDialogueEnded();
-                }
+                OnDialogueEnded?.Invoke();
 
                 InputManager.onInputReceived -= OnInputReceived;
 
                 CurrentDialogue = null;
             }
-        }
-
-        public void AddListener(IDialogueListener listener)
-        {
-            if (!listeners.Contains(listener))
-            {
-                listeners.Add(listener);
-            }
-        }
-
-        public void RemoveListener(IDialogueListener listener)
-        {
-            listeners.Remove(listener);
         }
 
         public void OnInputReceived(GamepadInput input, InputAction.CallbackContext context)

@@ -3,7 +3,7 @@ using TMPro;
 
 namespace ClementTodd
 {
-    public class DialogueCanvas : MonoBehaviour, IDialogueListener
+    public class DialogueCanvas : MonoBehaviour
     {
         public Animator animator;
 
@@ -37,22 +37,27 @@ namespace ClementTodd
             dialogueBoxLabel.color = textColor;
         }
 
-        private void Update()
-        {
-            UpdateTextAnimation();
-        }
-
         private void OnEnable()
         {
-            DialogueManager.Instance.AddListener(this);
+            if (DialogueManager.Instance)
+            {
+                DialogueManager.Instance.OnDialogueStarted += OnDialogueStarted;
+                DialogueManager.Instance.OnDialogueEnded += OnDialogueEnded;
+            }
         }
 
         private void OnDisable()
         {
             if (DialogueManager.Instance)
             {
-                DialogueManager.Instance.RemoveListener(this);
+                DialogueManager.Instance.OnDialogueStarted -= OnDialogueStarted;
+                DialogueManager.Instance.OnDialogueEnded -= OnDialogueEnded;
             }
+        }
+
+        private void Update()
+        {
+            UpdateTextAnimation();
         }
 
         public void SetText(string text)
