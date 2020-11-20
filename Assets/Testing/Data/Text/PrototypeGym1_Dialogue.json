@@ -1,9 +1,9 @@
 {
     "NPC1_Line1": {
-        "EN": "Oh, hi! I'm a <#FFCC00>non-player character<#FFFFFF>! My name is NPC1!"
+        "EN": "Oh,{Pause:0.25} hi!{Pause:0.5} I'm a {MultiplyDelay:5}<#FFCC00>non-player character<#FFFFFF>!{MultiplyDelay:2}{Pause:0.5}\nMy name is{MultiplyDelay:20}...{Pause:0.5}{MultiplyDelay:0}{FadeInTime:1} NPC1!"
     },
     "NPC1_Line2": {
-        "EN": "What can I do for you, friend?"
+        "EN": "What can I do for you,{Pause:0.25} friend?"
     },
     "NPC1_Line3": {
         "EN": "Anything else you need?"
@@ -28,38 +28,32 @@
     },
 
     "NPC2_Line1": {
-        "EN": "Hmmmmm?"
+        "EN": "<size=90>{MultiplyDelay:8}{Pause:0.5}Hmmmmm{MultiplyDelay:12}...?"
     },
     "NPC2_Line2": {
-        "EN": "Weeell! Hello there, little one!"
+        "EN": "<size=65>{MultiplyDelay:4}Weeell!{Pause:0.5} Hello there,{Pause:0.1} little one!"
     },
     "NPC2_Line3": {
-        "EN": "Thank you for taking the time to talk to your giant neighbours. You've really brightened my day!"
-    },
-    "NPC2_Line4": {
-        "EN": "I do wish that I could offer you something for your kindness. Do have fun running around and playing in this gym!"
+        "EN": "<size=65>{MultiplyDelay:4}Thank you for taking the time to talk to your giant neighbours.{Pause:0.5} You've really brightened my day!"
     },
 
     "NPC3_Line1": {
-        "EN": "This here is a test of text overflowing the dialogue box! To pass this test, the dialogue system should automatically split up this line of dialogue, which is one single large line of text, into as many seperate text boxes as are needed to allow us to read it completely. The text should advance each time the player presses the button until the end of the long line is reached. Thank you so much for attending my talk today. We went a little over time today so we won't have time for the Q&A unfortunately, but catch me at the afterparty if you wanna chat!"
+        "EN": "{MultiplyDelay:2}This here is a test of text overflowing the dialogue box!{MultiplyDelay:1}{Pause:0.5} To pass this test,{Pause:0.25} the dialogue system should automatically split up this line of dialogue,{Pause:0.25} which is one single large line of text,{Pause:0.25} into as many seperate text boxes as are needed to allow us to read it completely.{Pause:0.5} The text should advance each time the player presses the button until the end of the long line is reached.{Pause:0.5} Thank you so much for attending my talk today.{Pause:0.25} We went a little over time today so we won't have time for the Q&A unfortunately,{Pause:0.25} but catch me at the afterparty if you wanna chat!"
     },
 
     "TODO1": {
-        "EN": "Change properties such as typewriter speed and animations partway through a line of dialogue."
+        "EN": "{MultiplyDelay:0}Add a dialogue node to have player face the target."
     },
     "TODO2": {
-        "EN": "Add a dialogue node to have player face the target."
+        "EN": "{MultiplyDelay:0}Allow the player to skip the typewriter effect with a button press."
     },
     "TODO3": {
-        "EN": "Allow the player to skip the typewriter effect with a button press."
+        "EN": "{MultiplyDelay:0}Text animations such as waves and jiggles!"
     },
     "TODO4": {
-        "EN": "Text animations such as waves and jiggles"
+        "EN": "{MultiplyDelay:0}Cinematic camera angles during NPC 2's dialogue."
     },
     "TODO5": {
-        "EN": "Cinematic camera angles during NPC 2's dialogue."
-    },
-    "TODO6": {
-        "EN": "Let NPC 2's dialogue start at line 4 after speaking to them for the first time."
+        "EN": "{MultiplyDelay:0}Let NPC 1's dialogue start at line 2 after speaking to them for the first time."
     }
 }

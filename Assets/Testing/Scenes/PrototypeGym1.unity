@@ -80683,7 +80683,7 @@ MonoBehaviour:
   - {fileID: 1810433101}
   - {fileID: 1844054619}
   - {fileID: 2102641003}
-  defaultFadeInDelay: 0.01
+  defaultFadeInDelay: 0.025
   defaultFadeInDuration: 0.01
 --- !u!224 &872033766
 RectTransform:
@@ -81413,8 +81413,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1158817443}
-  m_LocalRotation: {x: -0.057678428, y: 0.000000020637856, z: -0.0000000010340564,
-    w: 0.9983353}
+  m_LocalRotation: {x: -0.057678428, y: -0.000000014850343, z: 7.440697e-10, w: 0.9983353}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -87471,8 +87470,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130506401}
-  m_LocalRotation: {x: 0.037804063, y: -0.000000016058834, z: 0.0000000023546072,
-    w: 0.9992852}
+  m_LocalRotation: {x: 0.03780407, y: -0.000000016828665, z: 0.0000000024674875, w: 0.9992852}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
