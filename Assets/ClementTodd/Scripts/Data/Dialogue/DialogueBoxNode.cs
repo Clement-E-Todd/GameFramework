@@ -18,7 +18,8 @@ namespace ClementTodd
 		{
 			if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
 			{
-                if (!DialogueManager.Instance.canvas.TryAdvanceText())
+                if (!DialogueManager.Instance.canvas.TrySkipTypewriterAnimation() &&
+                    !DialogueManager.Instance.canvas.TryAdvanceText())
                 {
                     DialogueGraph.ExecuteNextNode();
                 }

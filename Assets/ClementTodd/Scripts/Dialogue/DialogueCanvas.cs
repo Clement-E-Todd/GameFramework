@@ -20,25 +20,27 @@ namespace ClementTodd
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
 
-        private struct CharacterAnimationData
+        #region Typewriter Definitions
+        private bool typewriterInProgress = false;
+        private float typewriterStartTime = float.MinValue;
+
+        private struct TypewriterData
         {
             public float fadeInDelay;
             public float fadeInDuration;
         }
-        public float defaultFadeInDelay = 0.01f;
-        public float defaultFadeInDuration = 0.01f;
-        private float characterAnimationStartTime = float.MinValue;
-        private List<CharacterAnimationData> characterAnimationData;
-        const float fadeOutDuration = 0.1f;
+        private List<TypewriterData> typewriterData;
 
-        #region CharacterAnimationCommand Definition
-        private struct CharacterAnimationCommand
+        public float typewriterCharacterDelay = 0.01f;
+        public float typewriterFadeInDuration = 0.01f;
+
+        private struct TypewriterCommand
         {
             public string command;
             public string[] args;
             public string fullText;
 
-            public CharacterAnimationCommand(string sourceText, int startIndex)
+            public TypewriterCommand(string sourceText, int startIndex)
             {
                 command = string.Empty;
                 args = null;
@@ -109,6 +111,9 @@ namespace ClementTodd
         }
         #endregion
 
+        private float fadeOutStartTime;
+        const float fadeOutDuration = 0.1f;
+
         private void Awake()
         {
             Color32 textColor = dialogueBoxLabel.color;
@@ -147,7 +152,7 @@ namespace ClementTodd
             dialogueBoxLabel.ForceMeshUpdate();
 
             ShowDialogueBox();
-            StartShowTextAnimation();
+            StartTypewriterAnimation();
         }
 
         public bool TryAdvanceText()
@@ -172,21 +177,21 @@ namespace ClementTodd
                 dialogueBoxLabel.ForceMeshUpdate();
 
                 // Clear the removed text's animation data, reducing the delay time before the remaining letters should be shown
-                characterAnimationData.RemoveRange(0, textIndex);
-                if (characterAnimationData.Count > 0)
+                typewriterData.RemoveRange(0, textIndex);
+                if (typewriterData.Count > 0)
                 {
-                    float delay = characterAnimationData[0].fadeInDelay;
-                    for (int i = 0; i < characterAnimationData.Count; i++)
+                    float delay = typewriterData[0].fadeInDelay;
+                    for (int i = 0; i < typewriterData.Count; i++)
                     {
-                        CharacterAnimationData data = characterAnimationData[i];
+                        TypewriterData data = typewriterData[i];
                         data.fadeInDelay -= delay;
-                        characterAnimationData[i] = data;
+                        typewriterData[i] = data;
                     }
                 }
 
                 // Show the next part of the tex
                 ShowDialogueBox();
-                StartShowTextAnimation();
+                StartTypewriterAnimation();
 
                 return true;
             }
@@ -198,12 +203,12 @@ namespace ClementTodd
 
         private void InitCharacterAnimationDataFromText(string sourceText)
         {
-            characterAnimationData = new List<CharacterAnimationData>();
+            typewriterData = new List<TypewriterData>();
 
             // Define animation properties shared between multiple characters
             float totalFadeInDelay = 0f;
             float delayMultiplier = 1f;
-            float fadeInDuration = defaultFadeInDuration;
+            float fadeInDuration = typewriterFadeInDuration;
             bool readingRichTextMarkup = false;
 
             for (int sourceIndex = 0; sourceIndex < sourceText.Length; sourceIndex++)
@@ -215,7 +220,7 @@ namespace ClementTodd
                 while (sourceText[sourceIndex] == '{')
                 {
                     // Read the command from the source text
-                    CharacterAnimationCommand command = new CharacterAnimationCommand(sourceText, sourceIndex);
+                    TypewriterCommand command = new TypewriterCommand(sourceText, sourceIndex);
 
                     // Skip the source index ahead to the end of the command
                     if (command.fullText.Length > 0)
@@ -278,15 +283,15 @@ namespace ClementTodd
 
                 // Calculate the delay duration for this character (time between the full text's
                 // animation beginning and this character appearing).
-                totalFadeInDelay += pauseDuration > 0f ? pauseDuration : defaultFadeInDelay * delayMultiplier;
+                totalFadeInDelay += pauseDuration > 0f ? pauseDuration : typewriterCharacterDelay * delayMultiplier;
 
                 // Create the animation data for this character
-                CharacterAnimationData characterData = new CharacterAnimationData();
+                TypewriterData characterData = new TypewriterData();
 
                 characterData.fadeInDelay = totalFadeInDelay;
                 characterData.fadeInDuration = fadeInDuration;
 
-                characterAnimationData.Add(characterData);
+                typewriterData.Add(characterData);
             }
         }
 
@@ -318,16 +323,31 @@ namespace ClementTodd
             return text;
         }
 
-        private void StartShowTextAnimation()
+        private void StartTypewriterAnimation()
         {
             textVisible = true;
-            characterAnimationStartTime = Time.unscaledTime;
+            typewriterInProgress = true;
+            typewriterStartTime = Time.unscaledTime;
         }
 
-        private void StartHideTextAnimation()
+        private void StartFadeOutAnimation()
         {
             textVisible = false;
-            characterAnimationStartTime = Time.unscaledTime;
+            typewriterInProgress = false;
+            fadeOutStartTime = Time.unscaledTime;
+        }
+
+        public bool TrySkipTypewriterAnimation()
+        {
+            if (typewriterInProgress)
+            {
+                typewriterInProgress = false;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private void UpdateTextAnimation()
@@ -335,16 +355,19 @@ namespace ClementTodd
             TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
             Color32[] vertexColors;
 
+            bool areAllCharactersFullAlpha = true;
+
             for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
             {
+                // Calculate the current alpha for each letter depending on whether it is fading/faded in or out
                 float alpha = 0f;
 
                 if (textVisible)
                 {
-                    if (characterAnimationData != null)
+                    if (typewriterInProgress && typewriterData != null)
                     {
-                        CharacterAnimationData data = characterAnimationData[i];
-                        float animationTime = Time.unscaledTime - characterAnimationStartTime - data.fadeInDelay;
+                        TypewriterData data = typewriterData[i];
+                        float animationTime = Time.unscaledTime - typewriterStartTime - data.fadeInDelay;
                         alpha = Mathf.Clamp01(animationTime / data.fadeInDuration);
                     }
                     else
@@ -354,8 +377,15 @@ namespace ClementTodd
                 }
                 else
                 {
-                    float animationTime = Time.unscaledTime - characterAnimationStartTime;
+                    float animationTime = Time.unscaledTime - fadeOutStartTime;
                     alpha = 1f - Mathf.Clamp01(animationTime / fadeOutDuration);
+                }
+
+                // Keep track of whether all characters are fully visible for the sake of knowing when
+                // the typewriter animation has finished.
+                if (areAllCharactersFullAlpha && !Mathf.Approximately(alpha, 1f))
+                {
+                    areAllCharactersFullAlpha = false;
                 }
 
                 // Get the index of the material used by the current character.
@@ -378,6 +408,12 @@ namespace ClementTodd
                     vertexColors[vertexIndex + 2] = color;
                     vertexColors[vertexIndex + 3] = color;
                 }
+            }
+
+            // Mark the typewriter animation as over once all characters are fully visible
+            if (typewriterInProgress && areAllCharactersFullAlpha)
+            {
+                typewriterInProgress = false;
             }
 
             dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);

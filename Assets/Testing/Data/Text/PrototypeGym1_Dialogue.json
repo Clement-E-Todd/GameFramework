@@ -42,18 +42,15 @@
     },
 
     "TODO1": {
-        "EN": "{MultiplyDelay:0}Add a dialogue node to have player face the target."
+        "EN": "{MultiplyDelay:0}Let NPC 1's dialogue start at line 2 after speaking to them for the first time."
     },
     "TODO2": {
-        "EN": "{MultiplyDelay:0}Allow the player to skip the typewriter effect with a button press."
-    },
-    "TODO3": {
         "EN": "{MultiplyDelay:0}Text animations such as waves and jiggles!"
     },
-    "TODO4": {
-        "EN": "{MultiplyDelay:0}Cinematic camera angles during NPC 2's dialogue."
+    "TODO3": {
+        "EN": "{MultiplyDelay:0}Hook into ComputerCharacterControlState during dialogue to control characters. Have the player face NPCs during dialogue."
     },
-    "TODO5": {
-        "EN": "{MultiplyDelay:0}Let NPC 1's dialogue start at line 2 after speaking to them for the first time."
+    "TODO4": {
+        "EN": "{MultiplyDelay:0}Cinematic camera control during NPC 2's dialogue."
     }
 }
