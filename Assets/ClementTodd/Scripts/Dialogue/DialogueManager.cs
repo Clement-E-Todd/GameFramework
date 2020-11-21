@@ -25,6 +25,8 @@ namespace ClementTodd
         public System.Action OnDialogueStarted;
         public System.Action OnDialogueEnded;
 
+        public Properties globalProperties = new Properties();
+
         public void StartDialogue(DialogueGraph dialogue)
         {
             if (CurrentDialogue != null)

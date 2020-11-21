@@ -5,6 +5,7 @@ namespace ClementTodd
     [RequireComponent(typeof(Collider))]
     public abstract class InteractionZone : MonoBehaviour
     {
+        [Header("Base Interaction Properties")]
         public Transform sourceTransform;
 
         public Transform uiTargetTransform;
