@@ -15,7 +15,7 @@ namespace ClementTodd
         public Menu optionMenu;
         public MenuItem[] options;
 
-        private bool textVisible = false;
+        private bool showText = false;
         private bool dialogueBoxVisible = false;
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
@@ -325,14 +325,14 @@ namespace ClementTodd
 
         private void StartTypewriterAnimation()
         {
-            textVisible = true;
+            showText = true;
             typewriterInProgress = true;
             typewriterStartTime = Time.unscaledTime;
         }
 
         private void StartFadeOutAnimation()
         {
-            textVisible = false;
+            showText = false;
             typewriterInProgress = false;
             fadeOutStartTime = Time.unscaledTime;
         }
@@ -352,17 +352,34 @@ namespace ClementTodd
 
         private void UpdateTextAnimation()
         {
+            dialogueBoxLabel.ForceMeshUpdate();
+
             TMP_TextInfo textInfo = dialogueBoxLabel.textInfo;
+            Vector3[] vertices = dialogueBoxLabel.mesh.vertices;
+
+            Matrix4x4 matrix;
             Color32[] vertexColors;
 
             bool areAllCharactersFullAlpha = true;
 
             for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount; i++)
             {
+                TMP_CharacterInfo charInfo = textInfo.characterInfo[i];
+
+                // Skip this character if it is not visible
+                if (!charInfo.isVisible)
+                {
+                    continue;
+                }
+
+                int vertexIndex = charInfo.vertexIndex;
+                int materialIndex = charInfo.materialReferenceIndex;
+                vertexColors = textInfo.meshInfo[materialIndex].colors32;
+
                 // Calculate the current alpha for each letter depending on whether it is fading/faded in or out
                 float alpha = 0f;
 
-                if (textVisible)
+                if (showText)
                 {
                     if (typewriterInProgress && typewriterData != null)
                     {
@@ -388,26 +405,39 @@ namespace ClementTodd
                     areAllCharactersFullAlpha = false;
                 }
 
-                // Get the index of the material used by the current character.
-                int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
+                // Set the character's alpha
+                Color32 color = charInfo.color;
+                color.a = (byte)(255 * alpha);
 
-                // Get the vertex colors of the mesh used by this text element (character or sprite).
-                vertexColors = textInfo.meshInfo[materialIndex].colors32;
+                vertexColors[vertexIndex + 0] = color;
+                vertexColors[vertexIndex + 1] = color;
+                vertexColors[vertexIndex + 2] = color;
+                vertexColors[vertexIndex + 3] = color;
 
-                // Get the index of the first vertex used by this text element.
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
+                // TEST: Animate vertex positions
+                Vector3 offset = (charInfo.topLeft + charInfo.bottomRight) / 2;
 
-                // Only change the vertex color if the text element is visible.
-                if (textInfo.characterInfo[i].isVisible)
-                {
-                    Color32 color = textInfo.characterInfo[i].color;
-                    color.a = (byte)(255 * alpha);
+                vertices[vertexIndex + 0] -= offset;
+                vertices[vertexIndex + 1] -= offset;
+                vertices[vertexIndex + 2] -= offset;
+                vertices[vertexIndex + 3] -= offset;
 
-                    vertexColors[vertexIndex + 0] = color;
-                    vertexColors[vertexIndex + 1] = color;
-                    vertexColors[vertexIndex + 2] = color;
-                    vertexColors[vertexIndex + 3] = color;
-                }
+                float angle = Mathf.SmoothStep(-45, 45, Mathf.PingPong(Time.unscaledDeltaTime, 1f));
+                float sinTime = (Time.unscaledTime - i * 0.1f) * Mathf.PI;
+                matrix = Matrix4x4.TRS(
+                    Vector3.up * 10f * Mathf.Abs(Mathf.Sin((Time.unscaledTime - i * 0.1f) * Mathf.PI)),
+                    Quaternion.Euler(0, 0, 10f * Mathf.Sin(sinTime * 10f)),
+                    Vector3.one * (1f + 0.2f * Mathf.Abs(Mathf.Sin(sinTime))));
+
+                vertices[vertexIndex + 0] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 0]);
+                vertices[vertexIndex + 1] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 1]);
+                vertices[vertexIndex + 2] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 2]);
+                vertices[vertexIndex + 3] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 3]);
+
+                vertices[vertexIndex + 0] += offset;
+                vertices[vertexIndex + 1] += offset;
+                vertices[vertexIndex + 2] += offset;
+                vertices[vertexIndex + 3] += offset;
             }
 
             // Mark the typewriter animation as over once all characters are fully visible
@@ -416,12 +446,15 @@ namespace ClementTodd
                 typewriterInProgress = false;
             }
 
+            // Update the mesh
+            dialogueBoxLabel.mesh.vertices = vertices;
+
             dialogueBoxLabel.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
         }
 
         public void HideText()
         {
-            textVisible = false;
+            showText = false;
         }
 
         public void SetName(string name)

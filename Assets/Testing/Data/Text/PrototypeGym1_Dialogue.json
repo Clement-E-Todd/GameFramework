@@ -67,7 +67,7 @@
         "EN": "{MultiplyDelay:0}Text animations such as waves and jiggles!"
     },
     "TODO1": {
-        "EN": "{MultiplyDelay:0}Auto-translate text into Pig Latin for testing purposes."
+        "EN": "{MultiplyDelay:0}Make a tool to auto-translate text into Pig Latin for testing purposes."
     },
     "TODO3": {
         "EN": "{MultiplyDelay:0}Hook into ComputerCharacterControlState during dialogue to control characters. Have the player face NPCs during dialogue."
