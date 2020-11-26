@@ -68,10 +68,28 @@ namespace ClementTodd
                 public float delayPerCharacter = 0.1f;
             }
 
-            [Header("Constant Animations")]
+            [System.Serializable]
+            public class AnimationCurveXY
+            {
+                public AnimationCurve x;
+                public AnimationCurve y;
+
+                public AnimationCurveXY(float defaultValue)
+                {
+                    x = AnimationCurve.Constant(0f, 1f, defaultValue);
+                    y = AnimationCurve.Constant(0f, 1f, defaultValue);
+                }
+            }
+
+            [Header("Repeating Animations")]
             public Translation translation;
             public Rotation rotation;
             public Scale scale;
+
+            [Header("Typewriter Animations")]
+            public AnimationCurveXY translateIn = new AnimationCurveXY(0f);
+            public AnimationCurve rotateIn = AnimationCurve.Constant(0f, 1f, 0f);
+            public AnimationCurveXY scaleIn = new AnimationCurveXY(1f);
         }
         public TextAnimationStyle[] textAnimationStyles;
 

@@ -451,6 +451,7 @@ namespace ClementTodd
                 if (textAnimationData != null && textAnimationData[i].animationStyle != null)
                 {
                     TextAnimationData animationData = textAnimationData[i];
+                    float typewriterTime = Time.unscaledTime - typewriterStartTime - animationData.fadeInDelay;
                     DialogueManager.TextAnimationStyle style = animationData.animationStyle;
 
                     // We want character animations to pivot at the character's center, so offset
@@ -473,8 +474,17 @@ namespace ClementTodd
                         }
                         translation = style.translation.offset * animationFactor;
                     }
+                    if (style.translateIn.x.length > 0 && typewriterTime > 0f && typewriterTime <= style.translateIn.x.keys[style.translateIn.x.length - 1].time)
+                    {
+                        translation.x += style.translateIn.x.Evaluate(typewriterTime);
+                    }
+                    if (style.translateIn.y.length > 0 && typewriterTime > 0f && typewriterTime <= style.translateIn.y.keys[style.translateIn.y.length - 1].time)
+                    {
+                        translation.y += style.translateIn.y.Evaluate(typewriterTime);
+                    }
 
                     Quaternion rotation = Quaternion.identity;
+                    float angle = 0f;
                     if (style.rotation.type != DialogueManager.TextAnimationStyle.Type.None)
                     {
                         float animationFactor = Mathf.Sin((Time.time - style.rotation.delayPerCharacter * i) * Mathf.PI / style.rotation.duration);
@@ -482,8 +492,13 @@ namespace ClementTodd
                         {
                             animationFactor = Mathf.Abs(animationFactor);
                         }
-                        rotation = Quaternion.Euler(0f, 0f, style.rotation.startAngle + style.rotation.angleOffset * animationFactor);
+                        angle = style.rotation.startAngle + style.rotation.angleOffset * animationFactor;
                     }
+                    if (style.rotateIn.length > 0 && typewriterTime > 0f && typewriterTime <= style.rotateIn.keys[style.rotateIn.length - 1].time)
+                    {
+                        angle += style.rotateIn.Evaluate(typewriterTime);
+                    }
+                    rotation = Quaternion.Euler(0f, 0f, angle);
 
                     Vector3 scale = Vector3.one;
                     if (style.scale.type != DialogueManager.TextAnimationStyle.Type.None)
@@ -495,6 +510,14 @@ namespace ClementTodd
                         }
                         scale = style.scale.startScale + style.scale.scaleOffset * animationFactor;
                         scale.z = 1f;
+                    }
+                    if (style.scaleIn.x.length > 0 && typewriterTime > 0f && typewriterTime <= style.scaleIn.x.keys[style.scaleIn.x.length - 1].time)
+                    {
+                        scale.x *= style.scaleIn.x.Evaluate(typewriterTime);
+                    }
+                    if (style.scaleIn.y.length > 0 && typewriterTime > 0f && typewriterTime <= style.scaleIn.y.keys[style.scaleIn.y.length - 1].time)
+                    {
+                        scale.y *= style.scaleIn.y.Evaluate(typewriterTime);
                     }
 
                     // Apply the calculated transformations

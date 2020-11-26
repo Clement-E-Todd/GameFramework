@@ -1,6 +1,6 @@
 {
     "NPC1_Line1": {
-        "EN": "{AnimationStyle:Test}Oh,{Pause:0.25} hi!{Pause:0.5} I'm a {MultiplyDelay:5}<#FFCC00>non-player character<#FFFFFF>!{ClearAnimationStyle}{MultiplyDelay:2}{Pause:0.5}\nMy name is{MultiplyDelay:20}...{Pause:0.5}{MultiplyDelay:0}{FadeInTime:1} NPC1!"
+        "EN": "Oh,{Pause:0.25} hi!{Pause:0.5} I'm a {MultiplyDelay:5}<#FFCC00>non-player character<#FFFFFF>!{MultiplyDelay:2}{Pause:0.5}\nMy name is{MultiplyDelay:20}...{Pause:0.5}{MultiplyDelay:0}{FadeInTime:1} NPC1!"
     },
     "NPC1_Line2": {
         "EN": "What can I do for you,{Pause:0.25} friend?"
@@ -28,13 +28,13 @@
     },
 
     "NPC2_Line1": {
-        "EN": "<size=90>{MultiplyDelay:8}{Pause:0.5}Hmmmmm{MultiplyDelay:12}...?"
+        "EN": "<size=90>{AnimationStyle:Booming Voice}{MultiplyDelay:6}{Pause:0.5}Hmmmmm{MultiplyDelay:12}...?"
     },
     "NPC2_Line2": {
-        "EN": "<size=65>{MultiplyDelay:4}Weeell!{Pause:0.5} Hello there,{Pause:0.1} little one!"
+        "EN": "<size=65>{AnimationStyle:Booming Voice}{MultiplyDelay:3}Weeell!{Pause:0.5} Hello there,{Pause:0.1} little one!"
     },
     "NPC2_Line3": {
-        "EN": "<size=65>{MultiplyDelay:4}Thank you for taking the time to talk to your giant neighbours.{Pause:0.5} You've really brightened my day!"
+        "EN": "<size=65>{AnimationStyle:Booming Voice}{MultiplyDelay:3}Thank you for taking the time to talk to your giant neighbours.{Pause:0.5} You've really brightened my day!"
     },
 
     "NPC3_Line1": {
@@ -63,16 +63,13 @@
         "EN": "Nobody will ever see this line in-game. If you ARE seeing this, an error has occurred!\n...or maybe you're a mind-reader?!"
     },
 
-    "TODO2": {
-        "EN": "{MultiplyDelay:0}Text animations such as waves and jiggles!"
-    },
     "TODO1": {
         "EN": "{MultiplyDelay:0}Make a tool to auto-translate text into Pig Latin for testing purposes."
     },
-    "TODO3": {
+    "TODO2": {
         "EN": "{MultiplyDelay:0}Hook into ComputerCharacterControlState during dialogue to control characters. Have the player face NPCs during dialogue."
     },
-    "TODO4": {
+    "TODO3": {
         "EN": "{MultiplyDelay:0}Cinematic camera control during NPC 2's dialogue."
     }
 }
