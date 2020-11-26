@@ -1,4 +1,4 @@
-﻿using ClementTodd;
+﻿using ClementTodd.GameFramework;
 using UnityEngine;
 
 public class TestInteraction : InteractionZone
