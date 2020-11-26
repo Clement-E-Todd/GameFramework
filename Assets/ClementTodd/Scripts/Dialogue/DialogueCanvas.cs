@@ -20,27 +20,32 @@ namespace ClementTodd
         private bool nameBoxVisible = false;
         private bool optionsBoxVisible = false;
 
-        #region Typewriter Definitions
+        #region Text Animation Definitions
+
         private bool typewriterInProgress = false;
         private float typewriterStartTime = float.MinValue;
 
-        private struct TypewriterData
+        private float fadeOutStartTime;
+        const float fadeOutDuration = 0.1f;
+
+        private struct TextAnimationData
         {
+            public DialogueManager.TextAnimationStyle animationStyle;
             public float fadeInDelay;
             public float fadeInDuration;
         }
-        private List<TypewriterData> typewriterData;
+        private List<TextAnimationData> textAnimationData;
 
         public float typewriterCharacterDelay = 0.01f;
         public float typewriterFadeInDuration = 0.01f;
 
-        private struct TypewriterCommand
+        private struct TextAnimationCommand
         {
             public string command;
             public string[] args;
             public string fullText;
 
-            public TypewriterCommand(string sourceText, int startIndex)
+            public TextAnimationCommand(string sourceText, int startIndex)
             {
                 command = string.Empty;
                 args = null;
@@ -111,9 +116,6 @@ namespace ClementTodd
         }
         #endregion
 
-        private float fadeOutStartTime;
-        const float fadeOutDuration = 0.1f;
-
         private void Awake()
         {
             Color32 textColor = dialogueBoxLabel.color;
@@ -177,15 +179,15 @@ namespace ClementTodd
                 dialogueBoxLabel.ForceMeshUpdate();
 
                 // Clear the removed text's animation data, reducing the delay time before the remaining letters should be shown
-                typewriterData.RemoveRange(0, textIndex);
-                if (typewriterData.Count > 0)
+                textAnimationData.RemoveRange(0, textIndex);
+                if (textAnimationData.Count > 0)
                 {
-                    float delay = typewriterData[0].fadeInDelay;
-                    for (int i = 0; i < typewriterData.Count; i++)
+                    float delay = textAnimationData[0].fadeInDelay;
+                    for (int i = 0; i < textAnimationData.Count; i++)
                     {
-                        TypewriterData data = typewriterData[i];
+                        TextAnimationData data = textAnimationData[i];
                         data.fadeInDelay -= delay;
-                        typewriterData[i] = data;
+                        textAnimationData[i] = data;
                     }
                 }
 
@@ -203,13 +205,14 @@ namespace ClementTodd
 
         private void InitCharacterAnimationDataFromText(string sourceText)
         {
-            typewriterData = new List<TypewriterData>();
+            textAnimationData = new List<TextAnimationData>();
 
             // Define animation properties shared between multiple characters
             float totalFadeInDelay = 0f;
             float delayMultiplier = 1f;
             float fadeInDuration = typewriterFadeInDuration;
             bool readingRichTextMarkup = false;
+            DialogueManager.TextAnimationStyle animationStyle = null;
 
             for (int sourceIndex = 0; sourceIndex < sourceText.Length; sourceIndex++)
             {
@@ -220,7 +223,7 @@ namespace ClementTodd
                 while (sourceText[sourceIndex] == '{')
                 {
                     // Read the command from the source text
-                    TypewriterCommand command = new TypewriterCommand(sourceText, sourceIndex);
+                    TextAnimationCommand command = new TextAnimationCommand(sourceText, sourceIndex);
 
                     // Skip the source index ahead to the end of the command
                     if (command.fullText.Length > 0)
@@ -258,6 +261,35 @@ namespace ClementTodd
                             }
                             break;
 
+                        // Set the animation style for this character and following characters
+                        case "animationstyle":
+                            {
+                                animationStyle = null;
+                                if (command.args.Length > 0)
+                                {
+                                    for (int styleIndex = 0; styleIndex < DialogueManager.Instance.textAnimationStyles.Length; styleIndex++)
+                                    {
+                                        if (DialogueManager.Instance.textAnimationStyles[styleIndex].name == command.args[0])
+                                        {
+                                            animationStyle = DialogueManager.Instance.textAnimationStyles[styleIndex];
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (animationStyle == null)
+                                {
+                                    Debug.LogWarningFormat("Invalid text animation style '{0}'.", command.args[0]);
+                                }
+                            }
+                            break;
+
+                        // Clear the animation style for this character and following characters
+                        case "clearanimationstyle":
+                            {
+                                animationStyle = null;
+                            }
+                            break;
+
                         default:
                             {
                                 Debug.LogWarningFormat("Unknown command '{0}'.", command.command);
@@ -286,12 +318,13 @@ namespace ClementTodd
                 totalFadeInDelay += pauseDuration > 0f ? pauseDuration : typewriterCharacterDelay * delayMultiplier;
 
                 // Create the animation data for this character
-                TypewriterData characterData = new TypewriterData();
+                TextAnimationData characterData = new TextAnimationData();
 
+                characterData.animationStyle = animationStyle;
                 characterData.fadeInDelay = totalFadeInDelay;
                 characterData.fadeInDuration = fadeInDuration;
 
-                typewriterData.Add(characterData);
+                textAnimationData.Add(characterData);
             }
         }
 
@@ -381,11 +414,11 @@ namespace ClementTodd
 
                 if (showText)
                 {
-                    if (typewriterInProgress && typewriterData != null)
+                    if (typewriterInProgress && textAnimationData != null)
                     {
-                        TypewriterData data = typewriterData[i];
-                        float animationTime = Time.unscaledTime - typewriterStartTime - data.fadeInDelay;
-                        alpha = Mathf.Clamp01(animationTime / data.fadeInDuration);
+                        TextAnimationData animationData = textAnimationData[i];
+                        float animationTime = Time.unscaledTime - typewriterStartTime - animationData.fadeInDelay;
+                        alpha = Mathf.Clamp01(animationTime / animationData.fadeInDuration);
                     }
                     else
                     {
@@ -414,30 +447,70 @@ namespace ClementTodd
                 vertexColors[vertexIndex + 2] = color;
                 vertexColors[vertexIndex + 3] = color;
 
-                // TEST: Animate vertex positions
-                Vector3 offset = (charInfo.topLeft + charInfo.bottomRight) / 2;
+                // Animate vertex positions
+                if (textAnimationData != null && textAnimationData[i].animationStyle != null)
+                {
+                    TextAnimationData animationData = textAnimationData[i];
+                    DialogueManager.TextAnimationStyle style = animationData.animationStyle;
 
-                vertices[vertexIndex + 0] -= offset;
-                vertices[vertexIndex + 1] -= offset;
-                vertices[vertexIndex + 2] -= offset;
-                vertices[vertexIndex + 3] -= offset;
+                    // We want character animations to pivot at the character's center, so offset
+                    // the vertices before we do any transformations
+                    Vector3 offset = (charInfo.topLeft + charInfo.bottomRight) / 2;
 
-                float angle = Mathf.SmoothStep(-45, 45, Mathf.PingPong(Time.unscaledDeltaTime, 1f));
-                float sinTime = (Time.unscaledTime - i * 0.1f) * Mathf.PI;
-                matrix = Matrix4x4.TRS(
-                    Vector3.up * 10f * Mathf.Abs(Mathf.Sin((Time.unscaledTime - i * 0.1f) * Mathf.PI)),
-                    Quaternion.Euler(0, 0, 10f * Mathf.Sin(sinTime * 10f)),
-                    Vector3.one * (1f + 0.2f * Mathf.Abs(Mathf.Sin(sinTime))));
+                    vertices[vertexIndex + 0] -= offset;
+                    vertices[vertexIndex + 1] -= offset;
+                    vertices[vertexIndex + 2] -= offset;
+                    vertices[vertexIndex + 3] -= offset;
 
-                vertices[vertexIndex + 0] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 0]);
-                vertices[vertexIndex + 1] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 1]);
-                vertices[vertexIndex + 2] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 2]);
-                vertices[vertexIndex + 3] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 3]);
+                    // Calculate the animated translation, rotation and scale of the character
+                    Vector3 translation = Vector3.zero;
+                    if (style.translation.type != DialogueManager.TextAnimationStyle.Type.None)
+                    {
+                        float animationFactor = Mathf.Sin((Time.time - style.translation.delayPerCharacter * i) * Mathf.PI / style.translation.duration);
+                        if (style.translation.type == DialogueManager.TextAnimationStyle.Type.Bounce)
+                        {
+                            animationFactor = Mathf.Abs(animationFactor);
+                        }
+                        translation = style.translation.offset * animationFactor;
+                    }
 
-                vertices[vertexIndex + 0] += offset;
-                vertices[vertexIndex + 1] += offset;
-                vertices[vertexIndex + 2] += offset;
-                vertices[vertexIndex + 3] += offset;
+                    Quaternion rotation = Quaternion.identity;
+                    if (style.rotation.type != DialogueManager.TextAnimationStyle.Type.None)
+                    {
+                        float animationFactor = Mathf.Sin((Time.time - style.rotation.delayPerCharacter * i) * Mathf.PI / style.rotation.duration);
+                        if (style.rotation.type == DialogueManager.TextAnimationStyle.Type.Bounce)
+                        {
+                            animationFactor = Mathf.Abs(animationFactor);
+                        }
+                        rotation = Quaternion.Euler(0f, 0f, style.rotation.startAngle + style.rotation.angleOffset * animationFactor);
+                    }
+
+                    Vector3 scale = Vector3.one;
+                    if (style.scale.type != DialogueManager.TextAnimationStyle.Type.None)
+                    {
+                        float animationFactor = Mathf.Sin((Time.time - style.scale.delayPerCharacter * i) * Mathf.PI / style.scale.duration);
+                        if (style.scale.type == DialogueManager.TextAnimationStyle.Type.Bounce)
+                        {
+                            animationFactor = Mathf.Abs(animationFactor);
+                        }
+                        scale = style.scale.startScale + style.scale.scaleOffset * animationFactor;
+                        scale.z = 1f;
+                    }
+
+                    // Apply the calculated transformations
+                    matrix = Matrix4x4.TRS(translation, rotation, scale);
+
+                    vertices[vertexIndex + 0] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 0]);
+                    vertices[vertexIndex + 1] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 1]);
+                    vertices[vertexIndex + 2] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 2]);
+                    vertices[vertexIndex + 3] = matrix.MultiplyPoint3x4(vertices[vertexIndex + 3]);
+
+                    // Undo the offset to put the character back in the right place
+                    vertices[vertexIndex + 0] += offset;
+                    vertices[vertexIndex + 1] += offset;
+                    vertices[vertexIndex + 2] += offset;
+                    vertices[vertexIndex + 3] += offset;
+                }
             }
 
             // Mark the typewriter animation as over once all characters are fully visible

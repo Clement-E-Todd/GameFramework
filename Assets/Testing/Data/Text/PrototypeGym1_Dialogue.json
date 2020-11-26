@@ -1,6 +1,6 @@
 {
     "NPC1_Line1": {
-        "EN": "Oh,{Pause:0.25} hi!{Pause:0.5} I'm a {MultiplyDelay:5}<#FFCC00>non-player character<#FFFFFF>!{MultiplyDelay:2}{Pause:0.5}\nMy name is{MultiplyDelay:20}...{Pause:0.5}{MultiplyDelay:0}{FadeInTime:1} NPC1!"
+        "EN": "{AnimationStyle:Test}Oh,{Pause:0.25} hi!{Pause:0.5} I'm a {MultiplyDelay:5}<#FFCC00>non-player character<#FFFFFF>!{ClearAnimationStyle}{MultiplyDelay:2}{Pause:0.5}\nMy name is{MultiplyDelay:20}...{Pause:0.5}{MultiplyDelay:0}{FadeInTime:1} NPC1!"
     },
     "NPC1_Line2": {
         "EN": "What can I do for you,{Pause:0.25} friend?"

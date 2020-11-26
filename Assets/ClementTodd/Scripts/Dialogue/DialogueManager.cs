@@ -27,6 +27,54 @@ namespace ClementTodd
 
         public Properties globalProperties = new Properties();
 
+        [System.Serializable]
+        public class TextAnimationStyle
+        {
+            public string name;
+
+            public enum Type
+            {
+                None,
+                Bounce,
+                Wave
+            }
+
+            [System.Serializable]
+            public class Translation
+            {
+                public Type type = Type.None;
+                public Vector2 offset = new Vector2(0f, 10f);
+                public float duration = 0.5f;
+                public float delayPerCharacter = 0.1f;
+            }
+
+            [System.Serializable]
+            public class Rotation
+            {
+                public Type type = Type.None;
+                public float startAngle = 0f;
+                public float angleOffset = 45f;
+                public float duration = 0.5f;
+                public float delayPerCharacter = 0.1f;
+            }
+
+            [System.Serializable]
+            public class Scale
+            {
+                public Type type = Type.None;
+                public Vector2 startScale = Vector2.one;
+                public Vector2 scaleOffset = Vector2.one * 0.2f;
+                public float duration = 0.5f;
+                public float delayPerCharacter = 0.1f;
+            }
+
+            [Header("Constant Animations")]
+            public Translation translation;
+            public Rotation rotation;
+            public Scale scale;
+        }
+        public TextAnimationStyle[] textAnimationStyles;
+
         public void StartDialogue(DialogueGraph dialogue)
         {
             if (CurrentDialogue != null)
