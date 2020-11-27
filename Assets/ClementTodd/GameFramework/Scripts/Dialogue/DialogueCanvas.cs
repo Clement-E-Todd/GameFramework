@@ -127,8 +127,7 @@ namespace ClementTodd.GameFramework
         {
             if (DialogueManager.Instance)
             {
-                DialogueManager.Instance.OnDialogueStarted += OnDialogueStarted;
-                DialogueManager.Instance.OnDialogueEnded += OnDialogueEnded;
+                DialogueManager.Instance.OnDialogueEnded += HideAll;
             }
         }
 
@@ -136,8 +135,7 @@ namespace ClementTodd.GameFramework
         {
             if (DialogueManager.Instance)
             {
-                DialogueManager.Instance.OnDialogueStarted -= OnDialogueStarted;
-                DialogueManager.Instance.OnDialogueEnded -= OnDialogueEnded;
+                DialogueManager.Instance.OnDialogueEnded -= HideAll;
             }
         }
 
@@ -658,9 +656,7 @@ namespace ClementTodd.GameFramework
             }
         }
 
-        public void OnDialogueStarted() { }
-
-        public void OnDialogueEnded()
+        public void HideAll()
         {
             HideText();
             HideDialogueBox();

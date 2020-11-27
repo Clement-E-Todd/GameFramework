@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8159856290889404058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a3888221cd4c418b0885aff8f65c4, type: 3}
+  m_Name: Dialogue Set Object Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -72, y: -312}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -8159856290889404058}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -1172627437996149034}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -8159856290889404058}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -7827252251005813366}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  objectIndex: 1
+  active: 1
 --- !u!114 &-7827252251005813366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,7 +58,7 @@ MonoBehaviour:
   m_Name: Dialogue Box
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 184, y: -200}
+  position: {x: 568, y: -200}
   ports:
     keys:
     - previous
@@ -28,7 +73,7 @@ MonoBehaviour:
         node: {fileID: 2081513072324654905}
         reroutePoints: []
       - fieldName: next
-        node: {fileID: -1172627437996149034}
+        node: {fileID: -8159856290889404058}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -40,7 +85,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
-        node: {fileID: 5916534261963403162}
+        node: {fileID: -4211272798103891392}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -48,6 +93,184 @@ MonoBehaviour:
       _dynamic: 0
   key: NPC2_Line3
   overrideData: {fileID: 0}
+--- !u!114 &-6766670235080183364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: Dialogue Hide Dialogue Box
+  m_EditorClassIdentifier: Assembly-CSharp:ClementTodd.GameFramework:DialogueHideDialogueBoxNode
+  graph: {fileID: 11400000}
+  position: {x: 568, y: 184}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -6766670235080183364}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -5437441437248404282}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -6766670235080183364}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -3657720364454558669}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+--- !u!114 &-5437441437248404282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a3888221cd4c418b0885aff8f65c4, type: 3}
+  m_Name: Dialogue Set Object Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1080, y: -200}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -5437441437248404282}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -4211272798103891392}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -5437441437248404282}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -6766670235080183364}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  objectIndex: 1
+  active: 0
+--- !u!114 &-4891859840702033938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a3888221cd4c418b0885aff8f65c4, type: 3}
+  m_Name: Dialogue Set Object Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 56, y: -120}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -4891859840702033938}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 547712038432978409}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -4891859840702033938}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 2081513072324654905}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  objectIndex: 1
+  active: 1
+--- !u!114 &-4211272798103891392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a3888221cd4c418b0885aff8f65c4, type: 3}
+  m_Name: Dialogue Set Object Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 824, y: -200}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -4211272798103891392}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -7827252251005813366}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -4211272798103891392}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -5437441437248404282}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  objectIndex: 0
+  active: 0
 --- !u!114 &-4112645508218563753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,7 +284,7 @@ MonoBehaviour:
   m_Name: Dialogue Set Bool
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 248, y: 280}
+  position: {x: 1848, y: 184}
   ports:
     keys:
     - previous
@@ -91,6 +314,54 @@ MonoBehaviour:
   key: FirstTimeComplete
   value: 1
   scope: 0
+--- !u!114 &-3657720364454558669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496e3fcd80c7901428ae05d3b96c85cd, type: 3}
+  m_Name: Dialogue Wait
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 824, y: 184}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -3657720364454558669}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: -6766670235080183364}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -3657720364454558669}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 5916534261963403162}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  duration: 1.5
+  unscaled: 0
 --- !u!114 &-1172627437996149034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +388,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
-        node: {fileID: 547712038432978409}
+        node: {fileID: 1247601620431968478}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -141,7 +412,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
-        node: {fileID: -7827252251005813366}
+        node: {fileID: -8159856290889404058}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -213,6 +484,13 @@ MonoBehaviour:
   - {fileID: -7827252251005813366}
   - {fileID: -1172627437996149034}
   - {fileID: -4112645508218563753}
+  - {fileID: -8159856290889404058}
+  - {fileID: -4211272798103891392}
+  - {fileID: -5437441437248404282}
+  - {fileID: 1247601620431968478}
+  - {fileID: -4891859840702033938}
+  - {fileID: -3657720364454558669}
+  - {fileID: -6766670235080183364}
   startNode: {fileID: -530624393511940806}
   textData: {fileID: 4900000, guid: 256beb8fac244a54fb2bea32cce8cca3, type: 3}
 --- !u!114 &547712038432978409
@@ -228,7 +506,7 @@ MonoBehaviour:
   m_Name: First Introduction
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -120}
+  position: {x: -200, y: -120}
   ports:
     keys:
     - previous
@@ -239,8 +517,8 @@ MonoBehaviour:
       _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: elseNext
-        node: {fileID: -1172627437996149034}
+      - fieldName: next
+        node: {fileID: 1247601620431968478}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -252,7 +530,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: previous
-        node: {fileID: 2081513072324654905}
+        node: {fileID: -4891859840702033938}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -273,7 +551,7 @@ MonoBehaviour:
   m_Name: Dialogue Box
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: 280}
+  position: {x: 1336, y: 184}
   ports:
     keys:
     - previous
@@ -305,6 +583,51 @@ MonoBehaviour:
       _dynamic: 0
   key: TODO1
   overrideData: {fileID: 0}
+--- !u!114 &1247601620431968478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07a3888221cd4c418b0885aff8f65c4, type: 3}
+  m_Name: Dialogue Set Object Active
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -456, y: -120}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: 1247601620431968478}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: elseNext
+        node: {fileID: -1172627437996149034}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 1247601620431968478}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 547712038432978409}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  objectIndex: 0
+  active: 1
 --- !u!114 &2081513072324654905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +641,7 @@ MonoBehaviour:
   m_Name: Dialogue Box
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -72, y: -120}
+  position: {x: 312, y: -120}
   ports:
     keys:
     - previous
@@ -330,7 +653,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: 547712038432978409}
+        node: {fileID: -4891859840702033938}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -363,7 +686,7 @@ MonoBehaviour:
   m_Name: Dialogue Box
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -72, y: 280}
+  position: {x: 1592, y: 184}
   ports:
     keys:
     - previous
@@ -395,6 +718,52 @@ MonoBehaviour:
       _dynamic: 0
   key: TODO2
   overrideData: {fileID: 0}
+--- !u!114 &5603568824532332907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2aea80248817c58489102b5f35219a9c, type: 3}
+  m_Name: Dialogue Hide Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 568, y: 184}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: 5603568824532332907}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -5437441437248404282}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 5603568824532332907}
+      _typeQualifiedName: ClementTodd.GameFramework.DialogueNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -3657720364454558669}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  _DialogueGraph: {fileID: 0}
+  previous: {}
+  next: {}
 --- !u!114 &5916534261963403162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +777,7 @@ MonoBehaviour:
   m_Name: Dialogue Set Name
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -712, y: 280}
+  position: {x: 1080, y: 184}
   ports:
     keys:
     - previous
@@ -420,7 +789,7 @@ MonoBehaviour:
         Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: next
-        node: {fileID: -7827252251005813366}
+        node: {fileID: -3657720364454558669}
         reroutePoints: []
       _direction: 0
       _connectionType: 0

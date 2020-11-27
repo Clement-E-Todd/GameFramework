@@ -21,6 +21,7 @@ namespace ClementTodd.GameFramework
         public DialogueCanvas canvas;
 
         public DialogueGraph CurrentDialogue { get; private set; }
+        public GameObject[] ObjectReferences { get; private set; }
 
         public System.Action OnDialogueStarted;
         public System.Action OnDialogueEnded;
@@ -93,7 +94,7 @@ namespace ClementTodd.GameFramework
         }
         public TextAnimationStyle[] textAnimationStyles;
 
-        public void StartDialogue(DialogueGraph dialogue)
+        public void StartDialogue(DialogueGraph dialogue, GameObject[] objectReferences)
         {
             if (CurrentDialogue != null)
             {
@@ -114,6 +115,7 @@ namespace ClementTodd.GameFramework
             }
 
             CurrentDialogue = dialogue;
+            ObjectReferences = objectReferences;
 
             InputManager.onInputReceived += OnInputReceived;
 
