@@ -64,9 +64,9 @@
     },
 
     "TODO1": {
-        "EN": "{MultiplyDelay:0}Cinematic camera control during NPC 2's dialogue."
+        "EN": "{MultiplyDelay:0}Scripted character control"
     },
     "TODO2": {
-        "EN": "{MultiplyDelay:0}Hook into ComputerCharacterControlState during dialogue to control characters.\nHave the player face NPCs during dialogue."
+        "EN": "{MultiplyDelay:0}Have the player face NPCs during dialogue"
     }
 }

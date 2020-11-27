@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ClementTodd.GameFramework
 {
-    public class DialogueHideDialogueBoxNode : DialogueNode
+    public class DialogueHideBoxNode : DialogueNode
     {
         public override void Execute()
         {
