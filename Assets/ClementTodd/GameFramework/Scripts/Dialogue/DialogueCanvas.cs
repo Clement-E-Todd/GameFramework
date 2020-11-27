@@ -375,6 +375,14 @@ namespace ClementTodd.GameFramework
             if (typewriterInProgress)
             {
                 typewriterInProgress = false;
+
+                for (int i = 0; i < dialogueBoxLabel.textInfo.characterCount && i < textAnimationData.Count; i++)
+                {
+                    TextAnimationData data = textAnimationData[i];
+                    data.fadeInDelay = 0f;
+                    textAnimationData[i] = data;
+                }
+
                 return true;
             }
             else
