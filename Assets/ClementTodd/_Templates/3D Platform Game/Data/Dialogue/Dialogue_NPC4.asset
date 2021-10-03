@@ -1,0 +1,686 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9125074280632956818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258e6fece1712524999d1a7b2ddac4da, type: 3}
+  m_Name: Dialogue Number Comparison
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: 248}
+  ports:
+    keys:
+    - elseNext
+    - previous
+    - next
+    values:
+    - _fieldName: elseNext
+      _node: {fileID: -9125074280632956818}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 3991785272018682668}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: previous
+      _node: {fileID: -9125074280632956818}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: elseNext
+        node: {fileID: -5419053772514716399}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -9125074280632956818}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 504925946666161896}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  numberAKey: cycle
+  numberAScope: 0
+  numberB: 1
+  operation: 0
+--- !u!114 &-9036187286589667713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 952, y: 504}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -9036187286589667713}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: 3991785272018682668}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -9036187286589667713}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 4090931807737986192}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line5
+  overrideData: {fileID: 0}
+--- !u!114 &-7209471922265134900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e5eccbc57b7bc41b964260b6c9ebdb, type: 3}
+  m_Name: Dialogue Set Int
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1528, y: 504}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -7209471922265134900}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -2948341895224085745}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -7209471922265134900}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: cycle
+  value: 1
+  scope: 0
+  relative: 0
+--- !u!114 &-5419053772514716399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258e6fece1712524999d1a7b2ddac4da, type: 3}
+  m_Name: Dialogue Number Comparison
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: -8}
+  ports:
+    keys:
+    - elseNext
+    - previous
+    - next
+    values:
+    - _fieldName: elseNext
+      _node: {fileID: -5419053772514716399}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -9125074280632956818}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: previous
+      _node: {fileID: -5419053772514716399}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -519662399852119630}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -5419053772514716399}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -2043061527399798621}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  numberAKey: cycle
+  numberAScope: 0
+  numberB: 0
+  operation: 0
+--- !u!114 &-3456274050503729644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1272, y: -8}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -3456274050503729644}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -2043061527399798621}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -3456274050503729644}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 4090931807737986192}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line3
+  overrideData: {fileID: 0}
+--- !u!114 &-2948341895224085745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 952, y: 760}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -2948341895224085745}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: elseNext
+        node: {fileID: 3991785272018682668}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -2948341895224085745}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -7209471922265134900}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line6
+  overrideData: {fileID: 0}
+--- !u!114 &-2043061527399798621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 952, y: -8}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -2043061527399798621}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: -5419053772514716399}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -2043061527399798621}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -3456274050503729644}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line2
+  overrideData: {fileID: 0}
+--- !u!114 &-530624393511940806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5803ba69d7c46544593889d7e3ac2711, type: 3}
+  m_Name: Dialogue Set Name
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -8, y: -8}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: -530624393511940806}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -530624393511940806}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -519662399852119630}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Name
+  overrideData: {fileID: 4900000, guid: 06e7b6b485c277a4d8cbf27d44fb7edf, type: 3}
+--- !u!114 &-519662399852119630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84bf3f5c84be0f343b83f7d0c5de5ec4, type: 3}
+  m_Name: Dialogue Bool Condition
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 312, y: -8}
+  ports:
+    keys:
+    - elseNext
+    - previous
+    - next
+    values:
+    - _fieldName: elseNext
+      _node: {fileID: -519662399852119630}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 547712038432978409}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: previous
+      _node: {fileID: -519662399852119630}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -530624393511940806}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: -519662399852119630}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -5419053772514716399}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  boolKey: TalkedToNPC3
+  scope: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c5f72ad8536d2b4a9f4805e79e57107, type: 3}
+  m_Name: Dialogue_NPC4
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 547712038432978409}
+  - {fileID: -530624393511940806}
+  - {fileID: -519662399852119630}
+  - {fileID: -2043061527399798621}
+  - {fileID: -3456274050503729644}
+  - {fileID: -5419053772514716399}
+  - {fileID: -9125074280632956818}
+  - {fileID: 3991785272018682668}
+  - {fileID: 504925946666161896}
+  - {fileID: -9036187286589667713}
+  - {fileID: -2948341895224085745}
+  - {fileID: 4090931807737986192}
+  - {fileID: -7209471922265134900}
+  startNode: {fileID: -530624393511940806}
+  textData: {fileID: 4900000, guid: 256beb8fac244a54fb2bea32cce8cca3, type: 3}
+--- !u!114 &504925946666161896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: Dialogue Box
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 952, y: 248}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: 504925946666161896}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: -9125074280632956818}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 504925946666161896}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: 4090931807737986192}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line4
+  overrideData: {fileID: 0}
+--- !u!114 &547712038432978409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6bc6622178ce0046831e4bcf0f28791, type: 3}
+  m_Name: First Introduction
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: -152}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: 547712038432978409}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: elseNext
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: elseNext
+        node: {fileID: -519662399852119630}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 547712038432978409}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: NPC4_Line1
+  overrideData: {fileID: 0}
+--- !u!114 &3991785272018682668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 258e6fece1712524999d1a7b2ddac4da, type: 3}
+  m_Name: Dialogue Number Comparison
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: 504}
+  ports:
+    keys:
+    - elseNext
+    - previous
+    - next
+    values:
+    - _fieldName: elseNext
+      _node: {fileID: 3991785272018682668}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -2948341895224085745}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: previous
+      _node: {fileID: 3991785272018682668}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: elseNext
+        node: {fileID: -9125074280632956818}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 3991785272018682668}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: previous
+        node: {fileID: -9036187286589667713}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  numberAKey: cycle
+  numberAScope: 0
+  numberB: 2
+  operation: 0
+--- !u!114 &4090931807737986192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e5eccbc57b7bc41b964260b6c9ebdb, type: 3}
+  m_Name: Dialogue Set Int
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1528, y: 248}
+  ports:
+    keys:
+    - previous
+    - next
+    values:
+    - _fieldName: previous
+      _node: {fileID: 4090931807737986192}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: next
+        node: {fileID: -3456274050503729644}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: 504925946666161896}
+        reroutePoints: []
+      - fieldName: next
+        node: {fileID: -9036187286589667713}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: next
+      _node: {fileID: 4090931807737986192}
+      _typeQualifiedName: ClementTodd.EventGraphs.EventGraphNode+Connection, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  key: cycle
+  value: 1
+  scope: 0
+  relative: 1

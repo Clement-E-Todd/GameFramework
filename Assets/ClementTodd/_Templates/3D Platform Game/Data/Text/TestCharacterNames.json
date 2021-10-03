@@ -1,0 +1,26 @@
+{
+    "Player_Name": {
+        "EN": "Player",
+        "TEST": "Ayerplay"
+    },
+    "NPC1_Name": {
+        "EN": "NPC1",
+        "TEST": "Iggypay Oneay"
+    },
+    "NPC2_Name": {
+        "EN": "NPC2",
+        "TEST": "Iggypay Otway"
+    },
+    "NPC3_Name": {
+        "EN": "NPC3",
+        "TEST": "Iggypay Eethray"
+    },
+    "NPC4_Name": {
+        "EN": "NPC4",
+        "TEST": "Iggypay Ourfay"
+    },
+    "TODO_Name": {
+        "EN": "TO DO",
+        "TEST": "OTAY ODAY"
+    }
+}
