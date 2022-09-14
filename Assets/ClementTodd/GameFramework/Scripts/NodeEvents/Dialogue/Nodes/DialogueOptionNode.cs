@@ -1,5 +1,5 @@
 ﻿using ClementTodd.Localization;
-using UnityEngine.InputSystem;
+using UnityEngine;
 
 namespace ClementTodd.NodeEvents.Dialogue
 {
@@ -21,14 +21,14 @@ namespace ClementTodd.NodeEvents.Dialogue
             DialogueManager.Instance.canvas.ShowOptionsBox();
         }
 
-        public override void OnSubmitPressed(InputAction.CallbackContext context)
+        public override void OnSubmitPressed()
         {
-            DialogueManager.Instance.canvas.optionMenu.OnConfirm(context);
+            DialogueManager.Instance.canvas.optionMenu.OnConfirm();
         }
 
-        public override void OnNavigate(InputAction.CallbackContext context)
+        public override void OnNavigate(Vector2 navigation)
         {
-            DialogueManager.Instance.canvas.optionMenu.OnNavigate(context);
+            DialogueManager.Instance.canvas.optionMenu.OnNavigate(navigation);
         }
     }
 }

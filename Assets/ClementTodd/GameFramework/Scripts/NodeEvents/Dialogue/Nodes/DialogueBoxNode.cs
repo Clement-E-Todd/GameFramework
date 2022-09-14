@@ -1,6 +1,5 @@
 ﻿using ClementTodd.Localization;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace ClementTodd.NodeEvents.Dialogue
 {
@@ -15,15 +14,12 @@ namespace ClementTodd.NodeEvents.Dialogue
             DialogueManager.Instance.canvas.SetText(text);
         }
 
-        public override void OnSubmitPressed(InputAction.CallbackContext context)
+        public override void OnSubmitPressed()
         {
-            if (context.phase == InputActionPhase.Started && context.ReadValueAsButton())
-            {
-                if (!DialogueManager.Instance.canvas.TrySkipTypewriterAnimation() &&
+            if (!DialogueManager.Instance.canvas.TrySkipTypewriterAnimation() &&
                     !DialogueManager.Instance.canvas.TryAdvanceText())
-                {
-                    DataGraph.ExecuteNextNode();
-                }
+            {
+                DataGraph.ExecuteNextNode();
             }
         }
     }

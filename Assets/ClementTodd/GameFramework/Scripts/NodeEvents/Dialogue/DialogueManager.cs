@@ -1,12 +1,9 @@
-﻿using ClementTodd.NodeEvents;
-using ClementTodd.GUI;
-using ClementTodd.Input;
+﻿using ClementTodd.GUI;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace ClementTodd.NodeEvents.Dialogue
 {
-    public class DialogueManager : MonoBehaviour, IInputReceiver
+    public class DialogueManager : MonoBehaviour
     {
         private static DialogueManager _Instance;
         public static DialogueManager Instance
@@ -53,57 +50,35 @@ namespace ClementTodd.NodeEvents.Dialogue
 
         private void OnEventStarted()
         {
-            InputManager.onInputReceived += OnInputReceived;
+            // TODO: Enable input for dialogue (assuming input is structured similarly to v0.0.1)
         }
 
         private void OnEventEnded()
         {
-            InputManager.onInputReceived -= OnInputReceived;
+            // TODO: Disable input for dialogue (assuming input is structured similarly to v0.0.1)
         }
 
-        public void OnInputReceived(GamepadInput input, InputAction.CallbackContext context)
-        {
-            switch (input)
-            {
-                case GamepadInput.LeftStick:
-                    OnNavigate(context);
-                    break;
-
-                case GamepadInput.DPad:
-                    OnNavigate(context);
-                    break;
-
-                case GamepadInput.SouthButton:
-                    OnSubmitPressed(context);
-                    break;
-
-                case GamepadInput.EastButton:
-                    OnCancelPressed(context);
-                    break;
-            }
-        }
-
-        private void OnNavigate(InputAction.CallbackContext context)
+        private void OnNavigate(Vector2 navigation)
         {
             if (CurrentDialogueNode)
             {
-                CurrentDialogueNode.OnNavigate(context);
+                CurrentDialogueNode.OnNavigate(navigation);
             }
         }
 
-        private void OnSubmitPressed(InputAction.CallbackContext context)
+        private void OnSubmitPressed()
         {
-            if (CurrentDialogueNode && context.started)
+            if (CurrentDialogueNode)
             {
-                CurrentDialogueNode.OnSubmitPressed(context);
+                CurrentDialogueNode.OnSubmitPressed();
             }
         }
 
-        private void OnCancelPressed(InputAction.CallbackContext context)
+        private void OnCancelPressed()
         {
-            if (CurrentDialogueNode && context.started)
+            if (CurrentDialogueNode)
             {
-                CurrentDialogueNode.OnCancelPressed(context);
+                CurrentDialogueNode.OnCancelPressed();
             }
         }
 
